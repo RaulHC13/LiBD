@@ -1,4 +1,4 @@
-package com.proyecto.libd
+package com.proyecto.libd.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.proyecto.libd.Prefs
 
 class LoginActivity : AppCompatActivity() {
     private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

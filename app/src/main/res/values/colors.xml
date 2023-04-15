@@ -12,4 +12,5 @@
     <color name="colorBtnAdd">#944E4E4E</color>
     <color name="colorAddCard">#CC767171</color>
     <color name="colorEt">#CCF5F5F5</color>
+    <color name="underline">#BDB8B8</color>
 </resources>
