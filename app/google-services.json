@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "174343878081",
+    "project_id": "libd-96d39",
+    "storage_bucket": "libd-96d39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174343878081:android:493295df4acd427658ab40",
+        "android_client_info": {
+          "package_name": "com.example.libd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174343878081-9o233u6st1l677sh9o91u8tfojfs6pj9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL1KvEusYzzCC3eIh4lft9Osl-paaspG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174343878081-899koo8ncu068puv3kt8138kunlts8s6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
