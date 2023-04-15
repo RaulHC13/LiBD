@@ -1,9 +1,9 @@
 package com.proyecto.libd.model
 
 data class Libro(
-    var titulo: String ?= null,
+    var titulo: String,
     var numPaginas: Int ?= null,
     var autor: String ?= null,
-    var valoracion: Float,
-    var portadaURL: String
+    var valoracion: Float ?= null,
+    var portadaURL: String ?= null
 ): java.io.Serializable

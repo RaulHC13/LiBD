@@ -24,6 +24,10 @@
         android:icon="@drawable/ic_baseline_star_rate_24"
         android:title="Valoraciones"/>
 
+    <item android:id="@+id/nav_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Buscar"/>
+
     <item android:title="Configuracion">
     <menu>
         <item android:id="@+id/nav_perfil"

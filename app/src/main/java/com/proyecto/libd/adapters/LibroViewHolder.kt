@@ -14,6 +14,6 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
         binding.tvTitulo.text = libro.titulo.toString()
         binding.tvPaginas.text = String.format(binding.tvPaginas.context.getString(R.string.numPaginas), libro.autor.toString())
         binding.tvAutor.text = libro.autor.toString()
-        binding.ratingBarShow.rating = libro.valoracion
+        binding.ratingBarShow.rating = libro.valoracion!!
     }
 }

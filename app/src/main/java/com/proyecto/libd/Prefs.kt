@@ -13,7 +13,7 @@ class Prefs(c: Context) {
         return storage.getString("EMAIL", null)
     }
 
-    fun borrarTodo() {
+    fun borrarEmail() {
         storage.edit().clear().apply()
     }
 }
