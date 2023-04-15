@@ -19,3 +19,7 @@ class LibroAdapter(var lista: ArrayList<Libro>): RecyclerView.Adapter<LibroViewH
 
     override fun getItemCount() = lista.size
 }
+
+fun asd() {
+
+}
