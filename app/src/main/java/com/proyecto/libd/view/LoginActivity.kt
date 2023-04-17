@@ -74,6 +74,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun irHome() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }

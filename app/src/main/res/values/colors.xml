@@ -13,4 +13,8 @@
     <color name="colorAddCard">#CC767171</color>
     <color name="colorEt">#CCF5F5F5</color>
     <color name="underline">#BDB8B8</color>
+    <color name="color1">#F55555</color>
+    <color name="color2">#5AE434</color>
+    <color name="color3">#55BAF5</color>
+    <color name="color4">#FC9647</color>
 </resources>

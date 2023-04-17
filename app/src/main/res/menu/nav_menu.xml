@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <group android:checkableBehavior="single">
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_baseline_home_24"
@@ -27,7 +28,9 @@
     <item android:id="@+id/nav_search"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="Buscar"/>
+    </group>
 
+    <group android:checkableBehavior="single">
     <item android:title="Configuracion">
     <menu>
         <item android:id="@+id/nav_perfil"
@@ -39,7 +42,9 @@
             android:title="Configuracion"/>
     </menu>
     </item>
+    </group>
 
+    <group android:checkableBehavior="single">
     <item android:title="Salir">
     <menu>
 
@@ -53,4 +58,5 @@
 
     </menu>
     </item>
+    </group>
 </menu>
