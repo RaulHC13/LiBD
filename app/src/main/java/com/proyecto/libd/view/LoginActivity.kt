@@ -56,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
+
         val googleConfig = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("174343878081-9o233u6st1l677sh9o91u8tfojfs6pj9.apps.googleusercontent.com")
             .requestEmail()
