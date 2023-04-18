@@ -30,9 +30,9 @@
         android:title="Buscar"/>
     </group>
 
-    <group android:checkableBehavior="single">
     <item android:title="Configuracion">
     <menu>
+        <group android:checkableBehavior="single">
         <item android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_baseline_edit_24"
             android:title="Editar perfil"/>
@@ -40,13 +40,13 @@
         <item android:id="@+id/nav_config"
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="Configuracion"/>
-    </menu>
+        </group>
+        </menu>
     </item>
-    </group>
 
-    <group android:checkableBehavior="single">
     <item android:title="Salir">
     <menu>
+        <group android:checkableBehavior="single">
 
     <item android:id="@+id/nav_logout"
         android:icon="@drawable/ic_baseline_logout_24"
@@ -55,8 +55,7 @@
     <item android:id="@+id/nav_exit"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         android:title="Salir de la aplicacion"/>
-
+        </group>
     </menu>
     </item>
-    </group>
 </menu>

@@ -121,6 +121,17 @@ class MainActivity : AppCompatActivity() {
         setTitle(titulo)
     }
 
+    override fun onBackPressed() {
+        val homeFragment = supportFragmentManager.findFragmentByTag("homeFragment")
+        if (homeFragment == null || !homeFragment.isVisible) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, HomeFragment())
+                .commit()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
