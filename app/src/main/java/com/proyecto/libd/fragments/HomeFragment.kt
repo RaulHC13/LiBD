@@ -11,7 +11,7 @@ import com.example.libd.databinding.FragmentHomeBinding
 import com.proyecto.libd.CrearActivity
 
 class HomeFragment : Fragment() {
-    lateinit var binding: FragmentHomeBinding
+    private var binding: FragmentHomeBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,21 +19,27 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
-    companion object {
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setListeners()
     }
 
     private fun setListeners() {
-
-        binding.btnAdd.setOnClickListener {
-//            startActivity(Intent(this, CrearActivity::class.java))
+        binding!!.btnAdd.setOnClickListener {
+            startActivity(Intent(requireActivity(),CrearActivity::class.java))
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

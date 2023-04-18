@@ -1,6 +1,5 @@
 package com.proyecto.libd.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,12 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libd.R
 import com.example.libd.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.proyecto.libd.CrearActivity
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.fragments.*
