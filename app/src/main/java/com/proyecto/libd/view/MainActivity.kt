@@ -1,5 +1,6 @@
 package com.proyecto.libd.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,26 +9,34 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.libd.R
 import com.example.libd.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.fragments.*
 import com.proyecto.libd.model.Libro
+import de.hdodenhof.circleimageview.CircleImageView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
-    lateinit var prefs: Prefs
-    lateinit var toggle: ActionBarDrawerToggle
-    lateinit var navView: NavigationView
-    lateinit var email: String
-    lateinit var drawerLayout: DrawerLayout
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var prefs: Prefs
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navView: NavigationView
+    private lateinit var email: String
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var storage: FirebaseStorage
 
     lateinit var adapter: LibroAdapter
     private var listaLibros10 = arrayListOf<Libro>()
+
+    private var selectedItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         prefs = Prefs(this)
         email = prefs.getEmail().toString()
+        storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
 
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.nav_view)
@@ -43,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
 
         cambiarFragment(HomeFragment(), "Home")
 
@@ -55,14 +64,15 @@ class MainActivity : AppCompatActivity() {
     private fun setPerfil() {
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
-        val aux_email = headerView.findViewById<TextView>(R.id.tvUserEmail)
-        val aux_nombre = headerView.findViewById<TextView>(R.id.tvUsername)
 
-        var nombreGenerado = email.substring(0, email.indexOf("@"))
+        val aux_email = headerView.findViewById<TextView>(R.id.tvNavEmail)
+        val aux_nombre = headerView.findViewById<TextView>(R.id.tvNavUsername)
+        val aux_imagenPerfil = headerView.findViewById<CircleImageView>(R.id.ivNavPerfil)
+
+
+        imagenOnStart(aux_imagenPerfil)
         aux_email.text = email
-        aux_nombre.text = nombreGenerado
-        //Hay que meter el nombre de usuario y la imagen de perfil, despues de crear el sistema
-        //de perfiles con realtime storage.
+        aux_nombre.text = prefs.getUsername()
     }
 
 //    private fun setRecycler() {
@@ -75,12 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
 
-//        binding.btnAdd.setOnClickListener {
-//            startActivity(Intent(this, CrearActivity::class.java))
-//        }
-
         navView.setNavigationItemSelectedListener {
-
             it.isChecked = true
 
             when(it.itemId) {
@@ -90,8 +95,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_fav -> cambiarFragment(FavoritosFragment(), it.title.toString())
                 R.id.nav_rate -> cambiarFragment(ValoracionesFragment(), it.title.toString())
                 R.id.nav_search -> cambiarFragment(BuscarFragment(), it.title.toString())
-                R.id.nav_perfil -> Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
-                R.id.nav_config -> Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+                R.id.nav_perfil ->  {
+                    startActivity(Intent(this, PerfilActivity::class.java))
+
+                }
+                R.id.nav_config -> {
+                    Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+
+                }
 
                 R.id.nav_logout -> {
                     FirebaseAuth.getInstance().signOut()
@@ -115,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
         drawerLayout.closeDrawers()
-        setTitle(titulo)
+        title = titulo
     }
 
     override fun onBackPressed() {
@@ -134,5 +145,36 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun imagenOnStart(aux_imagenPerfil: CircleImageView) {
+        val requestOptions = RequestOptions().transform(CircleCrop())
+        val ref = storage.reference
+        val file = ref.child("$email/perfil.jpg")
+
+        file.metadata.addOnSuccessListener {
+            file.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this)
+                    .load(uri)
+                    .centerCrop()
+                    .apply(requestOptions)
+                    .into(aux_imagenPerfil)
+            }
+
+        }.addOnFailureListener {
+            val defaultImg = ref.child("default/perfil.jpg")
+            defaultImg.downloadUrl.addOnSuccessListener { uri ->
+                Glide.with(this)
+                    .load(uri)
+                    .centerCrop()
+                    .apply(requestOptions)
+                    .into(aux_imagenPerfil)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setPerfil()
     }
 }

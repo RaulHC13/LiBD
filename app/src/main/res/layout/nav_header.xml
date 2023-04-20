@@ -9,27 +9,30 @@
     android:layout_marginStart="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="2dp"
+        android:id="@+id/ivNavPerfil"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
         android:src="@drawable/perfil_generico" />
 
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvNavUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:paddingTop="10dp"
         android:text="Anonimo"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tvUserEmail"
+        android:id="@+id/tvNavEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="correo@usuario.com"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
     
     <View
         android:layout_width="match_parent"
