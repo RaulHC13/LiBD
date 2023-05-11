@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.libd.databinding.FragmentBuscarBinding
+import com.example.libd.databinding.FragmentHomeBinding
 
 class BuscarFragment : Fragment() {
 
-    private var binding: FragmentBuscarBinding? = null
+    private lateinit var binding: FragmentBuscarBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +22,7 @@ class BuscarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentBuscarBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,10 +32,5 @@ class BuscarFragment : Fragment() {
 
     private fun setListeners() {
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }

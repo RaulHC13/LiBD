@@ -33,7 +33,7 @@ class MensajeViewHolder(v: View): RecyclerView.ViewHolder(v) {
 
     private fun ponerImagen(email: String) {
         val ref = storage.reference
-        val file = ref.child("$email/perfil.jpg")
+        val file = ref.child("perfiles/$email/perfil.jpg")
 
         file.metadata.addOnSuccessListener {
             file.downloadUrl.addOnSuccessListener { uri ->

@@ -65,7 +65,7 @@ class PerfilActivity : AppCompatActivity() {
 
     private fun guardarImagen(uri: Uri) {
         val ref = storage.reference
-        val imagen = ref.child("$email/perfil.jpg")
+        val imagen = ref.child("perfiles/$email/perfil.jpg")
         val upload = imagen.putFile(uri).addOnFailureListener {
             println(it.message)
         }
@@ -82,7 +82,7 @@ class PerfilActivity : AppCompatActivity() {
 
     private fun imagenOnStart() {
         val ref = storage.reference
-        val file = ref.child("$email/perfil.jpg")
+        val file = ref.child("perfiles/$email/perfil.jpg")
         file.metadata.addOnSuccessListener {
             file.downloadUrl.addOnSuccessListener { uri ->
                 rellenarImagen(uri)

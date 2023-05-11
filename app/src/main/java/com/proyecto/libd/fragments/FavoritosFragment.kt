@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import com.example.libd.R
 import com.example.libd.databinding.FragmentBuscarBinding
 import com.example.libd.databinding.FragmentFavoritosBinding
+import com.example.libd.databinding.FragmentHomeBinding
 
 class FavoritosFragment : Fragment() {
 
-    private var binding: FragmentFavoritosBinding? = null
+    private lateinit var binding: FragmentFavoritosBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class FavoritosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoritosBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,10 +34,5 @@ class FavoritosFragment : Fragment() {
 
     private fun setListeners() {
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }

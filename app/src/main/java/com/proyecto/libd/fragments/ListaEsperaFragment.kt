@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.libd.R
 import com.example.libd.databinding.FragmentBuscarBinding
+import com.example.libd.databinding.FragmentHomeBinding
 import com.example.libd.databinding.FragmentListaEsperaBinding
 
 class ListaEsperaFragment : Fragment() {
 
-    private var binding: FragmentListaEsperaBinding? = null
+    private lateinit var binding: FragmentListaEsperaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class ListaEsperaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentListaEsperaBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,10 +34,5 @@ class ListaEsperaFragment : Fragment() {
 
     private fun setListeners() {
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }

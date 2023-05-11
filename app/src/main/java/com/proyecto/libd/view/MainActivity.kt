@@ -18,13 +18,13 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
-import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.fragments.*
-import com.proyecto.libd.model.Libro
 import de.hdodenhof.circleimageview.CircleImageView
 
 class MainActivity : AppCompatActivity() {
-
+    /**
+     * Hay que borrar la imagen de portada de storage cuando se borra un libro
+     */
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefs: Prefs
     private lateinit var toggle: ActionBarDrawerToggle
@@ -32,9 +32,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var storage: FirebaseStorage
-
-    lateinit var adapter: LibroAdapter
-    private var listaLibros10 = arrayListOf<Libro>()
 
     private var selectedItem: MenuItem? = null
 
@@ -53,35 +50,24 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         cambiarFragment(HomeFragment(), "Home")
 
         setPerfil()
         setListeners()
-//        setRecycler()
     }
 
     private fun setPerfil() {
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
 
-        val aux_email = headerView.findViewById<TextView>(R.id.tvNavEmail)
-        val aux_nombre = headerView.findViewById<TextView>(R.id.tvNavUsername)
-        val aux_imagenPerfil = headerView.findViewById<CircleImageView>(R.id.ivNavPerfil)
+        val auxEmail = headerView.findViewById<TextView>(R.id.tvNavEmail)
+        val auxNombre = headerView.findViewById<TextView>(R.id.tvNavUsername)
+        val auxImagenperfil = headerView.findViewById<CircleImageView>(R.id.ivNavPerfil)
 
-
-        imagenOnStart(aux_imagenPerfil)
-        aux_email.text = email
-        aux_nombre.text = prefs.getUsername()
+        imagenOnStart(auxImagenperfil)
+        auxEmail.text = email
+        auxNombre.text = prefs.getUsername()
     }
-
-//    private fun setRecycler() {
-//        val layoutManager = LinearLayoutManager(this)
-//        binding.recycler.layoutManager = layoutManager
-//
-//        adapter = LibroAdapter(listaLibros10)
-//        binding.recycler.adapter = adapter
-//    }
 
     private fun setListeners() {
 
@@ -101,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_config -> {
                     Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
-
                 }
 
                 R.id.nav_logout -> {
@@ -150,7 +135,7 @@ class MainActivity : AppCompatActivity() {
     private fun imagenOnStart(aux_imagenPerfil: CircleImageView) {
         val requestOptions = RequestOptions().transform(CircleCrop())
         val ref = storage.reference
-        val file = ref.child("$email/perfil.jpg")
+        val file = ref.child("perfiles/$email/perfil.jpg")
 
         file.metadata.addOnSuccessListener {
             file.downloadUrl.addOnSuccessListener { uri ->
@@ -160,7 +145,6 @@ class MainActivity : AppCompatActivity() {
                     .apply(requestOptions)
                     .into(aux_imagenPerfil)
             }
-
         }.addOnFailureListener {
             val defaultImg = ref.child("default/perfil.jpg")
             defaultImg.downloadUrl.addOnSuccessListener { uri ->
