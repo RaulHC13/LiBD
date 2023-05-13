@@ -14,7 +14,7 @@
             android:id="@+id/tvHomeUltimos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Ultimos 10 libros añadidos"

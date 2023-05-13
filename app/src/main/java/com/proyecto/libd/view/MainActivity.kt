@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.nav_home -> cambiarFragment(HomeFragment(), it.title.toString())
                 R.id.nav_chat -> cambiarFragment(ChatFragment(), it.title.toString())
+                R.id.nav_leyendo -> cambiarFragment(LeyendoFragment(), it.title.toString())
                 R.id.nav_list -> cambiarFragment(ListaEsperaFragment(), it.title.toString())
                 R.id.nav_fav -> cambiarFragment(FavoritosFragment(), it.title.toString())
                 R.id.nav_rate -> cambiarFragment(ValoracionesFragment(), it.title.toString())

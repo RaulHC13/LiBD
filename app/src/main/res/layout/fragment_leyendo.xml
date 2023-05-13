@@ -3,26 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.proyecto.libd.fragments.FavoritosFragment"
-    android:background="@color/color2">
+    android:background="#A452B6"
+    tools:context="com.proyecto.libd.fragments.LeyendoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvFavoritosFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No hay libros favoritos"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEspera"
@@ -34,6 +20,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvLeyendoFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No hay libros"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
