@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.nav_config -> {
-                    Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, LibrosDetallesActivity::class.java))
                 }
 
                 R.id.nav_logout -> {

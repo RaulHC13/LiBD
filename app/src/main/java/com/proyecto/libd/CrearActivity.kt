@@ -61,7 +61,7 @@ class CrearActivity : AppCompatActivity() {
     private fun crearLibro() {
 
         if (!comprobarDatos()) return
-        val libro = Libro(titulo = titulo, numPaginas = numPaginas, autor = autor, valoracion = valoracion, portadaURL = "")
+        val libro = Libro(titulo = titulo, numPaginas = numPaginas, autor = autor, valoracion = valoracion)
 
         val ref = db.getReference("libros")
         ref.child(libro.titulo).setValue(libro).addOnSuccessListener {
@@ -88,11 +88,10 @@ class CrearActivity : AppCompatActivity() {
         }
 
         autor = binding.etAutor.text.toString().trim()
-        if (autor.length < 4) {
-            binding.etAutor.requestFocus()
-            binding.etAutor.error = "Autor no valido, al menos 4 letras."
-            return false
-        }
+        if (autor.isNullOrBlank()) autor = "Desconocido"
+
+
+        valoracion = binding.ratingBar.rating
         numPaginas = binding.etPaginas.text.toString().toInt()
         return true
     }

@@ -4,9 +4,6 @@ import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
-import com.example.libd.R
 import com.example.libd.databinding.LibroLayoutBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.model.Libro
@@ -16,10 +13,14 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
     private val binding = LibroLayoutBinding.bind(v)
     val storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
 
+//    , onItemSelected: (Libro) -> Unit
     fun render(libro: Libro) {
         binding.tvTitulo.text = libro.titulo
         binding.ratingBarShow.rating = libro.valoracion!!
 
+//        itemView.setOnClickListener {
+//            onItemSelected(libro)
+//        }
         ponerImagen(libro.titulo)
     }
 

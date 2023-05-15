@@ -6,6 +6,5 @@ data class Libro(
     var numPaginas: Int ?= null,
     var autor: String ?= null,
     var valoracion: Float ?= 0.0f,
-    var portadaURL: String ?= null,
     var fecha: Long = System.currentTimeMillis()
 ): java.io.Serializable

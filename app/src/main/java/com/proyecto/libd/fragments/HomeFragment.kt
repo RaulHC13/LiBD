@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.libd.R
 import com.example.libd.databinding.FragmentHomeBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,9 +15,8 @@ import com.google.firebase.database.ValueEventListener
 import com.proyecto.libd.CrearActivity
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.adapters.LibroAdapter
-import com.proyecto.libd.adapters.MensajeAdapter
 import com.proyecto.libd.model.Libro
-import com.proyecto.libd.model.MensajeChat
+import com.proyecto.libd.view.LibrosDetallesActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -85,12 +83,17 @@ class HomeFragment : Fragment() {
         }
     }
 
+//    private fun onItemSelected(libro: Libro) {
+//        val i = Intent(requireActivity(), LibrosDetallesActivity::class.java)
+//        i.putExtra("LIBRO", libro)
+//    }
+
     private fun setRecycler() {
         val layoutManager = LinearLayoutManager(requireContext())
         layoutManager.initialPrefetchItemCount = 10
         binding.recycler.layoutManager = layoutManager
 
-        adapter = LibroAdapter(libros10)
+        adapter = LibroAdapter(libros10) //{onItemSelected(it)}
         binding.recycler.adapter = adapter
     }
 }
