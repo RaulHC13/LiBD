@@ -14,6 +14,11 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.proyecto.libd.Prefs
 
 class LoginActivity : AppCompatActivity() {
+
+    /**
+     * ResponseLauncher que activa login(), crea un launcher GoogleSignIn y toma los credenciales,
+     * intenta hacer log in y, si es exitoso guarda el email en shared preferences y va al activity home.
+     */
     private val responseLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
@@ -55,6 +60,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Crea una configuracion de google para el sign in. Utiliza la api key para entrar a firebase
+     * Crea un google client y cierra sesión para evitar problemas, después llama al responseLauncher.
+     */
     private fun login() {
 
         val googleConfig = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -67,6 +76,9 @@ class LoginActivity : AppCompatActivity() {
         responseLauncher.launch(googleClient.signInIntent)
     }
 
+    /**
+     * Comprueba si el usuario tiene una sesión abierte y, si es así omite el proceso de login.
+     */
     private fun comprobarSesion() {
         val email = prefs.getEmail()
         if (email != null) {

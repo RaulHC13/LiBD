@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#655F5F"
+    android:background="#806247"
     tools:context="com.proyecto.libd.view.PerfilActivity">
 
     <ImageView
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:backgroundTint="#2F1252C0"
+        android:backgroundTint="#330048C3"
         android:text="Cambiar nombre"
         app:icon="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"

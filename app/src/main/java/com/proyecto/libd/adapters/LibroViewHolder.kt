@@ -18,8 +18,6 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
 
     fun render(libro: Libro) {
         binding.tvTitulo.text = libro.titulo
-        binding.tvPaginas.text = String.format(binding.tvPaginas.context.getString(R.string.numPaginas), libro.numPaginas)
-        binding.tvAutor.text = libro.autor.toString()
         binding.ratingBarShow.rating = libro.valoracion!!
 
         ponerImagen(libro.titulo)

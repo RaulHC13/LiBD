@@ -35,6 +35,7 @@
             android:id="@+id/tvBuscarFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:text="No se han encontrado libros"
             android:textSize="26sp"
             android:textStyle="bold"

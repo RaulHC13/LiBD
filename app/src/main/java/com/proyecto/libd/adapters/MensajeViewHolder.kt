@@ -15,9 +15,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MensajeViewHolder(v: View): RecyclerView.ViewHolder(v) {
+
     val binding = MensajeChatLayoutBinding.bind(v)
     val storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
 
+    /**
+     * Si el email del mensaje es el mismo que el del usuario, el mensaje sera verde, si no, azul.
+     */
     fun render(mensaje: MensajeChat, email: String) {
         binding.tvMensajeCorreo.text = mensaje.email
         binding.tvMensajeTexto.text = mensaje.texto
@@ -31,6 +35,10 @@ class MensajeViewHolder(v: View): RecyclerView.ViewHolder(v) {
         ponerImagen(mensaje.email.toString())
     }
 
+    /**
+     * Carga una imagen en el imageView del mensaje, si puede la descarga
+     * de firebase y si no existe, carga una por defecto.
+     */
     private fun ponerImagen(email: String) {
         val ref = storage.reference
         val file = ref.child("perfiles/$email/perfil.jpg")

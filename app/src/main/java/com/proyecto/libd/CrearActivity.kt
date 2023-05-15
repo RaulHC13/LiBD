@@ -74,9 +74,9 @@ class CrearActivity : AppCompatActivity() {
     private fun comprobarDatos(): Boolean {
 
         titulo = binding.etNombre.text.toString().trim()
-        if (titulo.length < 2) {
+        if (titulo.length < 2 || titulo.length > 22) {
             binding.etNombre.requestFocus()
-            binding.etNombre.error = "Titulo no válido, al menos 2 letras."
+            binding.etNombre.error = "Titulo no válido"
             return false
         }
 

@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
         setListeners()
     }
 
+    /**
+     * Carga la imagen de perfil y el email en los campos del nav view.
+     */
     private fun setPerfil() {
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
@@ -69,6 +72,10 @@ class MainActivity : AppCompatActivity() {
         auxNombre.text = prefs.getUsername()
     }
 
+    /**
+     * Pone listeners a cada objeto del menu lateral, de este modo se navegan los fragments.
+     * Permite cerrar la sesion borrando el email de prefs y salir de la aplicación.
+     */
     private fun setListeners() {
 
         navView.setNavigationItemSelectedListener {
@@ -102,6 +109,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @param fragment y un titulo, mueve el fragment a frameLayout, no añade nada a backStack
+     * de este modo al presionar atrás en cualquier punto nunca podrá verse el frameLayout vacío.
+     */
     private fun cambiarFragment(fragment: Fragment, titulo: String) {
 
         val fragmentManager = supportFragmentManager
@@ -115,6 +126,10 @@ class MainActivity : AppCompatActivity() {
         title = titulo
     }
 
+    /**
+     * Sobrescritura que comprueba si el homeFragment es visible y, si no lo es, lo mueve a
+     * frameLayout, de este modo frameLayout nunca puede quedar vacío.
+     */
     override fun onBackPressed() {
         val homeFragment = supportFragmentManager.findFragmentByTag("homeFragment")
         if (homeFragment == null || !homeFragment.isVisible) {
@@ -133,6 +148,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Toma como parametro un contenedor de imagen.
+     * Baja una imagen de firebase storage a partir del email de usuario y se carga en el contenedor.
+     * Se comprueba si existe la imagen en la base de datos y, si no existe (el usuario no
+     * ha subido una), se carga una imagen por defecto.
+     */
     private fun imagenOnStart(aux_imagenPerfil: CircleImageView) {
         val requestOptions = RequestOptions().transform(CircleCrop())
         val ref = storage.reference

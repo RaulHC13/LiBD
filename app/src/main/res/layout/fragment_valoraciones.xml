@@ -24,6 +24,7 @@
             android:id="@+id/tvValoracionesFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:text="Sin valoraciones"
             android:textSize="26sp"
             android:textStyle="bold"

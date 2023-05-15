@@ -56,6 +56,11 @@ class ChatFragment : Fragment() {
         traerMensaje()
     }
 
+    /**
+     * inputManager controla el teclado virtual, con hideSoftInputFromWindow se puede configurar
+     * para que cuando el teclado aparezca, no desplaze componentes, en este caso, la propia barra
+     * de texto.
+     */
     private fun setListener() {
         binding.ivEnviar.setOnClickListener {
             enviarMensaje()
@@ -72,6 +77,10 @@ class ChatFragment : Fragment() {
         binding.recChat.adapter = adapter
     }
 
+    /**
+     * Para enviar el texto primero toma el texto y luego toma una referencia de la base de datos
+     * y añade el valor. Si es exitoso, se llama a traerMensaje y se pone la barra de texto en blanco.
+     */
     private fun enviarMensaje() {
         val texto = binding.tiChat.text.toString().trim()
         if (texto.isEmpty()) return
@@ -86,6 +95,11 @@ class ChatFragment : Fragment() {
             }
     }
 
+    /**
+     * Toma una referencia de la BD y añade un addValueEventListener, sobrescribiendo el metodo onDataChange
+     * se recorre los hijos de snapshot y si no son nulos, se añaden a lista ordenados por fecha mas reciente,
+     * notifica a adapter y hace scroll al nuevo mensaje.
+     */
     private fun traerMensaje() {
         db.getReference("chat").addValueEventListener(object: ValueEventListener {
 

@@ -15,6 +15,11 @@ import com.proyecto.libd.Prefs
 
 class PerfilActivity : AppCompatActivity() {
 
+    /**
+     * Launcher que se activa al hacer click sobre la imagen.
+     * Abre la galeria y permite buscar y seleccionar una imagen.
+     * Despues llama a los metodos para rellenar y guardar la imagen.
+     */
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
         if (uri != null) {
             binding.ivPerfil.setImageURI(uri)
@@ -52,6 +57,10 @@ class PerfilActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Toma el texto y cambia el username en las sharedpreferences
+     * En caso de dejar el campo vacio, se crea un username por defecto
+     */
     private fun cambiarUsername() {
         var newUsername: String
         newUsername = binding.etPerfilUsername.text.toString()
@@ -80,6 +89,10 @@ class PerfilActivity : AppCompatActivity() {
             .into(binding.ivPerfil)
     }
 
+    /**
+     * Metodo que se llama en onCreate. Carga una imagen en el imageView, si puede la descarga
+     * de firebase y si no, carga una por defecto.
+     */
     private fun imagenOnStart() {
         val ref = storage.reference
         val file = ref.child("perfiles/$email/perfil.jpg")

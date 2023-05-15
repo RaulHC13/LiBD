@@ -24,6 +24,7 @@
             android:id="@+id/tvLeyendoFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:text="No hay libros"
             android:textSize="26sp"
             android:textStyle="bold"
