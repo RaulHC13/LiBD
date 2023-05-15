@@ -35,7 +35,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.proyecto.libd.CrearActivity"
+            android:name="com.proyecto.libd.view.CrearActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
