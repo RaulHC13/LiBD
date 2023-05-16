@@ -12,20 +12,20 @@
 
         <SearchView
             android:id="@+id/svBuscar"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="40dp"
-            android:layout_marginStart="-6dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="10dp"
+            android:background="#A4A8A7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerResultados"
-            android:layout_width="405dp"
-            android:layout_height="651dp"
-            android:layout_marginTop="10dp"
+            android:id="@+id/recyclerBuscar"
+            android:layout_width="360dp"
+            android:layout_height="580dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +39,7 @@
             android:text="No se han encontrado libros"
             android:textSize="26sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

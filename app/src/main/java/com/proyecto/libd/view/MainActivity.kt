@@ -103,7 +103,6 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_exit -> finishAffinity()
-
             }
             true
         }
@@ -136,6 +135,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, HomeFragment())
                 .commit()
+            //----
+            navView.menu.findItem(R.id.nav_home)?.isChecked = true
+            //----
         } else {
             super.onBackPressed()
         }

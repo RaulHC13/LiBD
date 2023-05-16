@@ -68,20 +68,56 @@
             android:id="@+id/detallesRatingBarShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="120dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="#F6BF33"
             android:focusedByDefault="false"
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="#E7B917"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDetallesAutor"
-            app:layout_constraintVertical_bias="0.403" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <LinearLayout
+            android:layout_width="46dp"
+            android:layout_height="280dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivEsperaBtn"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/baseline_bookmark_border_24" />
+
+            <ImageView
+                android:id="@+id/ivLeyendoBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="8"
+                app:srcCompat="@drawable/baseline_menu_book_24" />
+
+            <ImageView
+                android:id="@+id/ivFavBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/baseline_favorite_border_24" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ivDetallesPortada"
@@ -92,36 +128,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/portada_generica" />
-
-        <ImageView
-            android:id="@+id/ivLeyendoBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/ivFavBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivEsperaBtn"
-            app:srcCompat="@drawable/baseline_menu_book_24" />
-
-        <ImageView
-            android:id="@+id/ivEsperaBtn"
-            android:layout_width="40dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_bookmark_border_24" />
-
-        <ImageView
-            android:id="@+id/ivFavBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/detallesRatingBarShow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/detallesRatingBarShow"
-            app:srcCompat="@drawable/baseline_favorite_border_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

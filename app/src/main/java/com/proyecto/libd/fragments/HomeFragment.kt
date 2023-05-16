@@ -16,6 +16,7 @@ import com.proyecto.libd.view.CrearActivity
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.model.Libro
+import com.proyecto.libd.view.LibrosDetallesActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -24,8 +25,8 @@ class HomeFragment : Fragment() {
     lateinit var adapter: LibroAdapter
     lateinit var db: FirebaseDatabase
 
+    private var listaLibrosInicial = ArrayList<Libro>()
     private var libros10 = ArrayList<Libro>()
-    private var listaLibros10 = ArrayList<Libro>()
     var email = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,16 +58,16 @@ class HomeFragment : Fragment() {
         db.getReference("libros").addValueEventListener(object: ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                listaLibros10.clear()
+                listaLibrosInicial.clear()
                 if (snapshot.exists()) {
                     for (item in snapshot.children) {
                         val libro = item.getValue(Libro::class.java)
                         if (libro != null) {
-                            listaLibros10.add(libro)
+                            listaLibrosInicial.add(libro)
                         }
                     }
-                    listaLibros10.sortByDescending { libro -> libro.fecha }
-                    libros10 = ArrayList(listaLibros10.take(10))
+                    listaLibrosInicial.sortByDescending { libro -> libro.fecha }
+                    libros10 = ArrayList(listaLibrosInicial.take(10))
                     adapter.lista = libros10
                     adapter.notifyDataSetChanged()
                 }
@@ -82,17 +83,18 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun onItemSelected(libro: Libro) {
-//        val i = Intent(requireActivity(), LibrosDetallesActivity::class.java)
-//        i.putExtra("LIBRO", libro)
-//    }
+    private fun onItemSelected(libro: Libro) {
+        val i = Intent(requireActivity(), LibrosDetallesActivity::class.java)
+        i.putExtra("LIBRO", libro)
+        startActivity(i)
+    }
 
     private fun setRecycler() {
         val layoutManager = LinearLayoutManager(requireContext())
         layoutManager.initialPrefetchItemCount = 10
         binding.recycler.layoutManager = layoutManager
 
-        adapter = LibroAdapter(libros10) //{onItemSelected(it)}
+        adapter = LibroAdapter(libros10) { onItemSelected(it) }
         binding.recycler.adapter = adapter
     }
 }

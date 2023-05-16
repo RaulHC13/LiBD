@@ -13,14 +13,15 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
     private val binding = LibroLayoutBinding.bind(v)
     val storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
 
-//    , onItemSelected: (Libro) -> Unit
-    fun render(libro: Libro) {
+
+    fun render(libro: Libro , onItemSelected: (Libro) -> Unit) {
         binding.tvTitulo.text = libro.titulo
         binding.ratingBarShow.rating = libro.valoracion!!
-
-//        itemView.setOnClickListener {
-//            onItemSelected(libro)
-//        }
+//----
+        binding.cardViewLibro.setOnClickListener {
+            onItemSelected(libro)
+        }
+//----
         ponerImagen(libro.titulo)
     }
 
