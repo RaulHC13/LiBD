@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:backgroundTint="@color/colorHome"
     app:cardCornerRadius="20dp"
     app:cardElevation="10dp"
@@ -17,117 +17,120 @@
     app:layout_constraintVertical_bias="0.5">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvDetallesTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginTop="40dp"
+            android:maxLength="30"
+            android:maxLines="4"
             android:text="Titulo"
             android:textColor="#EFEFEF"
-            android:textSize="20sp"
+            android:textSize="26sp"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ivDetallesPortada"
-            app:layout_constraintTop_toTopOf="@+id/ivDetallesPortada" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDetallesPortada" />
 
         <TextView
             android:id="@+id/tvDetallesPaginas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginTop="40dp"
             android:text="@string/numPaginas"
             android:textColor="#EFEFEF"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toEndOf="@+id/ivDetallesPortada"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetallesTitulo" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetallesAutor" />
 
         <TextView
             android:id="@+id/tvDetallesAutor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
-            android:text="TextView"
+            android:layout_marginTop="40dp"
+            android:maxLength="30"
+            android:text="Autor"
             android:textColor="#EFEFEF"
+            android:textSize="20sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toEndOf="@+id/ivDetallesPortada"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetallesPaginas" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetallesTitulo" />
 
         <RatingBar
             android:id="@+id/detallesRatingBarShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="120dp"
-            android:layout_marginBottom="40dp"
             android:backgroundTint="#F6BF33"
             android:focusedByDefault="false"
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="#E7B917"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDetallesAutor"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:layout_width="46dp"
-            android:layout_height="280dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/ivEsperaBtn"
-                android:layout_width="40dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/baseline_bookmark_border_24" />
-
-            <ImageView
-                android:id="@+id/ivLeyendoBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="8"
-                app:srcCompat="@drawable/baseline_menu_book_24" />
-
-            <ImageView
-                android:id="@+id/ivFavBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/baseline_favorite_border_24" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tvDetallesPaginas" />
 
         <ImageView
             android:id="@+id/ivDetallesPortada"
-            android:layout_width="100dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="140dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/portada_generica" />
+
+        <ImageView
+            android:id="@+id/ivDetallesListaEspera"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_bookmark_border_24" />
+
+        <ImageView
+            android:id="@+id/ivDetallesFavoritos"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/baseline_favorite_border_24" />
+
+        <ImageView
+            android:id="@+id/ivDetallesLeyendo"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetallesFavoritos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivDetallesFavoritos"
+            app:srcCompat="@drawable/baseline_menu_book_24" />
+
+        <ImageView
+            android:id="@+id/ivDetallesVolver"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

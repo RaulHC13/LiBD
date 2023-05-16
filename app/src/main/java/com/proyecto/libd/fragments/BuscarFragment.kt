@@ -85,7 +85,7 @@ class BuscarFragment : Fragment() {
                         }
                     }
                     librosInicial.sortByDescending { libro -> libro.titulo }
-                    librosInicial.sortByDescending { libro -> libro.fecha }
+                    librosInicial.sortByDescending { libro -> libro.autor }
                     adapter.notifyDataSetChanged()
                     buscarLibros("")
                 }

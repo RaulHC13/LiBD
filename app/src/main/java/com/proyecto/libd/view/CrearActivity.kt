@@ -108,11 +108,5 @@ class CrearActivity : AppCompatActivity() {
             .into(binding.ivCrearPortada)
     }
 
-//    private fun <T: java.io.Serializable?> getSerializable(intent: Intent?, key: String, clase: Class<T>): T {
-//        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent?.getSerializableExtra(key, clase)!!
-//        } else {
-//            intent?.getSerializableExtra(key) as T
-//        }
-//    }
+
 }

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         cambiarFragment(HomeFragment(), "Home")
+        navView.menu.findItem(R.id.nav_home).isChecked = true
 
         setPerfil()
         setListeners()
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.frameLayout, HomeFragment())
                 .commit()
             //----
-            navView.menu.findItem(R.id.nav_home)?.isChecked = true
+            navView.menu.findItem(R.id.nav_home).isChecked = true
             //----
         } else {
             super.onBackPressed()
@@ -183,6 +184,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        navView.menu.findItem(R.id.nav_home).isChecked = true
         setPerfil()
     }
 }

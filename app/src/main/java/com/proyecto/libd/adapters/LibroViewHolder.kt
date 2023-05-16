@@ -17,11 +17,11 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
     fun render(libro: Libro , onItemSelected: (Libro) -> Unit) {
         binding.tvTitulo.text = libro.titulo
         binding.ratingBarShow.rating = libro.valoracion!!
-//----
+
         binding.cardViewLibro.setOnClickListener {
             onItemSelected(libro)
         }
-//----
+
         ponerImagen(libro.titulo)
     }
 
