@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#806247"
+    android:background="#977250"
     tools:context="com.proyecto.libd.view.PerfilActivity">
 
     <ImageView
@@ -25,8 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:backgroundTint="#330048C3"
-        android:text="Cambiar nombre"
+        android:backgroundTint="#4D1E6EF6"
+        android:text="Aplicar cambios"
         app:icon="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Username"
-        android:textColor="#0D1D75"
-        android:textSize="24sp"
+        android:textColor="#1F37BD"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

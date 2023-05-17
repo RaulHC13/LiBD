@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="200dp"
-        android:layout_height="120dp"
+        android:layout_height="140dp"
         android:backgroundTint="@color/colorLogin"
         app:cardCornerRadius="20dp"
         app:cardUseCompatPadding="true"
@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LiBD"
+        android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         android:textStyle="bold"

@@ -32,6 +32,12 @@ class Prefs(c: Context) {
         return email!!.substring(0, email.indexOf("@")).toString()
     }
 
+    //Cambia los "." en el email a "-" para que firebase no de problemas de formato.
+    fun getEmailFormateado(): String? {
+        var emailFormateado = getEmail()?.replace(".", "-")
+        return emailFormateado
+    }
+
     fun borrarEmail() {
         storage.edit().clear().apply()
     }

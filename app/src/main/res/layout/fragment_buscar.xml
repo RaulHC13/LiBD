@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.proyecto.libd.fragments.BuscarFragment"
-    android:background="@color/teal_200">
+    android:background="@color/colorBuscar"
+    tools:context="com.proyecto.libd.fragments.BuscarFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="320dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
-            android:background="#A4A8A7"
+            android:background="#D5D6D6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

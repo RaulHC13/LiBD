@@ -7,16 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorLogin">#92FFFFFF</color>
+    <color name="colorLogin">#80FFFFFF</color>
     <color name="colorHome">#4E4E4E</color>
+    <color name="colorBuscar">#3AB7D6</color>
     <color name="colorBtnAdd">#944E4E4E</color>
-    <color name="colorAddCard">#CC767171</color>
+    <color name="colorChat">#CC787474</color>
     <color name="colorEt">#CCF5F5F5</color>
     <color name="underline">#BDB8B8</color>
     <color name="color1">#F55555</color>
     <color name="color2">#5AE434</color>
     <color name="color3">#55BAF5</color>
     <color name="color4">#FC9647</color>
+    <color name="colorDetalles">#78614D</color>
     <color name="colorChat1">#69C04A</color>
     <color name="colorChat2">#848BE3</color>
 </resources>

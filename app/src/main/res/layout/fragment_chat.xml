@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAddCard"
+    android:background="#776E6E"
     tools:context="com.proyecto.libd.fragments.ChatFragment">
 
     <LinearLayout
@@ -21,8 +21,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginVertical="2dp"
-            android:layout_marginLeft="2dp"
+            android:layout_marginVertical="4dp"
+            android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -30,10 +30,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp">
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tiChat"
