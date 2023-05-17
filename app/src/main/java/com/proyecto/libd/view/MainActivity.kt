@@ -23,7 +23,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class MainActivity : AppCompatActivity() {
     /**
-     * Hay que borrar la imagen de portada de storage cuando se borra un libro
+     * ARREGLAR EL SELECTED ITEM PARA CUANDO SE HAGA BACK DESDE EL ACTIVITY DETALLES
+     * SE PONGA EN EL CORRECTO Y NO SIEMPRE EN HOME.
      */
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefs: Prefs
