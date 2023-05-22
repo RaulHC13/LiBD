@@ -17,7 +17,7 @@ import java.util.*
 class MensajeViewHolder(v: View): RecyclerView.ViewHolder(v) {
 
     val binding = MensajeChatLayoutBinding.bind(v)
-    val storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
+    val storage = FirebaseStorage.getInstance(binding.ivMensajePerfil.resources.getString(R.string.storageURL))
 
     /**
      * Si el email del mensaje es el mismo que el del usuario, el mensaje sera verde, si no, azul.

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.example.libd.R
 import com.example.libd.databinding.ActivityCrearBinding
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -35,8 +36,8 @@ class CrearActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCrearBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        db = FirebaseDatabase.getInstance("https://libd-96d39-default-rtdb.europe-west1.firebasedatabase.app/")
-        storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
+        db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
+        storage = FirebaseStorage.getInstance(binding.etAutor.resources.getString(R.string.storageURL))
 
         setListeners()
     }

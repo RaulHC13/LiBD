@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.libd.R
 import com.example.libd.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -67,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
     private fun login() {
 
         val googleConfig = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("174343878081-9o233u6st1l677sh9o91u8tfojfs6pj9.apps.googleusercontent.com")
+            .requestIdToken(binding.btnLogin.resources.getString(R.string.idToken))
             .requestEmail()
             .build()
         val googleClient = GoogleSignIn.getClient(this, googleConfig)

@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="@color/colorHome"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="10dp"
+    app:cardMaxElevation="10dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -45,6 +44,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="6dp"
             android:backgroundTint="#FBD858"
+            android:clickable="false"
+            android:focusable="false"
             android:focusedByDefault="false"
             android:isIndicator="true"
             android:numStars="5"
@@ -63,8 +64,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.125"
-            app:srcCompat="@drawable/portada_generica" />
+            app:layout_constraintVertical_bias="0.125" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPortada"
+            app:layout_constraintEnd_toEndOf="@+id/ivPortada"
+            app:layout_constraintStart_toStartOf="@+id/ivPortada"
+            app:layout_constraintTop_toTopOf="@+id/ivPortada" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

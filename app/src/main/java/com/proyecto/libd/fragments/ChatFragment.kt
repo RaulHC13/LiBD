@@ -45,7 +45,7 @@ class ChatFragment : Fragment() {
 
         prefs = Prefs(requireContext())
         email = prefs.getEmail().toString()
-        db = FirebaseDatabase.getInstance("https://libd-96d39-default-rtdb.europe-west1.firebasedatabase.app/")
+        db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

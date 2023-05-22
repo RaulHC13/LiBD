@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.libd.R
 import com.example.libd.databinding.ActivityPerfilBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
@@ -38,7 +39,7 @@ class PerfilActivity : AppCompatActivity() {
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
         prefs = Prefs(this)
-        storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
+        storage = FirebaseStorage.getInstance(binding.ivPerfil.resources.getString(R.string.storageURL))
         email = prefs.getEmail().toString()
 
         binding.tvPerfilUsername.text = prefs.getUsername()

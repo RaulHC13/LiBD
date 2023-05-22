@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -22,10 +21,7 @@ import com.proyecto.libd.fragments.*
 import de.hdodenhof.circleimageview.CircleImageView
 
 class MainActivity : AppCompatActivity() {
-    /**
-     * ARREGLAR EL SELECTED ITEM PARA CUANDO SE HAGA BACK DESDE EL ACTIVITY DETALLES
-     * SE PONGA EN EL CORRECTO Y NO SIEMPRE EN HOME.
-     */
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefs: Prefs
     private lateinit var toggle: ActionBarDrawerToggle
@@ -34,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var storage: FirebaseStorage
 
-    private var selectedItem: MenuItem? = null
+    private var selectedItem = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         prefs = Prefs(this)
         email = prefs.getEmail().toString()
-        storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
+        storage = FirebaseStorage.getInstance(binding.navView.resources.getString(R.string.storageURL))
 
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.nav_view)
@@ -84,19 +80,41 @@ class MainActivity : AppCompatActivity() {
             it.isChecked = true
 
             when(it.itemId) {
-                R.id.nav_home -> cambiarFragment(HomeFragment(), it.title.toString())
-                R.id.nav_chat -> cambiarFragment(ChatFragment(), it.title.toString())
-                R.id.nav_leyendo -> cambiarFragment(LeyendoFragment(), it.title.toString())
-                R.id.nav_list -> cambiarFragment(ListaEsperaFragment(), it.title.toString())
-                R.id.nav_fav -> cambiarFragment(FavoritosFragment(), it.title.toString())
-                R.id.nav_rate -> cambiarFragment(ValoracionesFragment(), it.title.toString())
-                R.id.nav_search -> cambiarFragment(BuscarFragment(), it.title.toString())
+                R.id.nav_home -> {
+                    cambiarFragment(HomeFragment(), it.title.toString())
+                    selectedItem = R.id.nav_home
+                }
+                R.id.nav_chat -> {
+                    cambiarFragment(ChatFragment(), it.title.toString())
+                    selectedItem = R.id.nav_chat
+                }
+                R.id.nav_leyendo -> {
+                    cambiarFragment(LeyendoFragment(), it.title.toString())
+                    selectedItem = R.id.nav_leyendo
+                }
+                R.id.nav_list -> {
+                    cambiarFragment(ListaEsperaFragment(), it.title.toString())
+                    selectedItem = R.id.nav_list
+                }
+                R.id.nav_fav -> {
+                    cambiarFragment(FavoritosFragment(), it.title.toString())
+                    selectedItem = R.id.nav_fav
+                }
+                R.id.nav_rate -> {
+                    cambiarFragment(ValoracionesFragment(), it.title.toString())
+                    selectedItem = R.id.nav_rate
+                }
+                R.id.nav_search -> {
+                    cambiarFragment(BuscarFragment(), it.title.toString())
+                    selectedItem = R.id.nav_search
+                }
                 R.id.nav_perfil ->  {
                     startActivity(Intent(this, PerfilActivity::class.java))
-
+                    selectedItem = R.id.nav_perfil
                 }
                 R.id.nav_config -> {
-                    startActivity(Intent(this, LibrosDetallesActivity::class.java))
+                    startActivity(Intent(this, OpcionesActivity::class.java))
+                    selectedItem = R.id.nav_config
                 }
 
                 R.id.nav_logout -> {
@@ -183,9 +201,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Al volver a MainActivity, desde LibrosDetallesActivity, PerfilActivity, etc... Se selecciona
+     * el elemento del nav view pertinente.
+     */
     override fun onResume() {
         super.onResume()
-        navView.menu.findItem(R.id.nav_home).isChecked = true
+        navView.menu.findItem(selectedItem).isChecked = true
         setPerfil()
     }
 }

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/colorDetalles"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -38,8 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/portada_generica" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvDetallesTitulo"
@@ -130,6 +129,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/baseline_favorite_border_24" />
+
+        <ProgressBar
+            android:id="@+id/progressBarDetalles"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetallesPortada"
+            app:layout_constraintEnd_toEndOf="@+id/ivDetallesPortada"
+            app:layout_constraintStart_toStartOf="@+id/ivDetallesPortada"
+            app:layout_constraintTop_toTopOf="@+id/ivDetallesPortada" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

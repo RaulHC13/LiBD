@@ -3,6 +3,7 @@ package com.proyecto.libd.view
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -21,7 +22,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     lateinit var binding: LibrosDetallesLayoutBinding
     lateinit var db: FirebaseDatabase
     lateinit var prefs: Prefs
-    val storage = FirebaseStorage.getInstance("gs://libd-96d39.appspot.com/")
+    private val storage = FirebaseStorage.getInstance(binding.tvDetallesAutor.resources.getString(R.string.storageURL))
 
     private var titulo = ""
     private var emailFormateado = ""
@@ -37,7 +38,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = LibrosDetallesLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        db = FirebaseDatabase.getInstance("https://libd-96d39-default-rtdb.europe-west1.firebasedatabase.app/")
+        db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
         prefs = Prefs(this)
         emailFormateado = prefs.getEmailFormateado().toString()
 
@@ -46,8 +47,6 @@ class LibrosDetallesActivity : AppCompatActivity() {
         getEstado()
         setListeners()
     }
-
-
 
     private fun setListeners() {
         binding.ivDetallesVolver.setOnClickListener {
@@ -61,7 +60,6 @@ class LibrosDetallesActivity : AppCompatActivity() {
              * su estado, si estan o no presionados, si no lo estan, añaden el libro a sus respectivas
              * listas y cambian su icono, si no, lo borran de la base de datos y cambian su icono.
              */
-
             //No favorito
             if (drawableResourceFav == R.drawable.baseline_favorite_border_24) {
                 addFavorito()
@@ -81,14 +79,12 @@ class LibrosDetallesActivity : AppCompatActivity() {
             //No esta en la lista de espera
             if (drawableResourceEspera == R.drawable.baseline_bookmark_border_24) {
                 addListaEspera()
-                Toast.makeText(this, "Guardado $titulo", Toast.LENGTH_SHORT).show()
                 ivEspera.setImageResource(R.drawable.ic_baseline_bookmark_24)
                 drawableResourceEspera = R.drawable.ic_baseline_bookmark_24
 
                 //Esta en la lista de espera
             } else if (drawableResourceEspera == R.drawable.ic_baseline_bookmark_24) {
                 quitarListaEspera()
-                Toast.makeText(this, "Borrado $titulo", Toast.LENGTH_SHORT).show()
                 ivEspera.setImageResource(R.drawable.baseline_bookmark_border_24)
                 drawableResourceEspera = R.drawable.baseline_bookmark_border_24
             }
@@ -118,7 +114,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun addFavorito() {
 
         db.getReference("usuarios/$emailFormateado/favoritos").child(titulo).setValue(titulo).addOnSuccessListener {
-            Toast.makeText(this, "Se ha añadido a favoritos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha añadido $titulo a favoritos", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al añadir a favoritos", Toast.LENGTH_SHORT).show()
         }
@@ -127,7 +123,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun quitarFavorito() {
 
         db.getReference("usuarios/$emailFormateado/favoritos").child(titulo).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Se ha eliminado de favoritos,", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha eliminado $titulo de favoritos", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al eliminar de favoritos,", Toast.LENGTH_SHORT).show()
         }
@@ -136,7 +132,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun addListaEspera() {
 
         db.getReference("usuarios/$emailFormateado/listaEspera").child(titulo).setValue(titulo).addOnSuccessListener {
-            Toast.makeText(this, "Se ha añadido a la lista de espera", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha añadido $titulo a la lista de espera", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al añadir a la lista de espera", Toast.LENGTH_SHORT).show()
         }
@@ -145,7 +141,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun quitarListaEspera() {
 
         db.getReference("usuarios/$emailFormateado/listaEspera").child(titulo).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Se ha eliminado de la lista de espera,", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha eliminado $titulo de la lista de espera", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al eliminar de la lista de espera", Toast.LENGTH_SHORT).show()
         }
@@ -154,7 +150,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun addLeyendo() {
 
         db.getReference("usuarios/$emailFormateado/listaLectura").child(titulo).setValue(titulo).addOnSuccessListener {
-            Toast.makeText(this, "Se ha añadido a la lista de lectura", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha añadido $titulo a la lista de lectura", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al añadir a la lista de lectura", Toast.LENGTH_SHORT).show()
         }
@@ -163,7 +159,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun quitarLeyendo() {
 
         db.getReference("usuarios/$emailFormateado/listaLectura").child(titulo).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Se ha eliminado de la lista de lectura", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha eliminado $titulo de la lista de lectura", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al eliminar de la lista de lectura,", Toast.LENGTH_SHORT).show()
         }
@@ -180,7 +176,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
         titulo = libro.titulo
         binding.tvDetallesTitulo.text = titulo
         binding.tvDetallesPaginas.text = getString(R.string.numPaginas, libro.numPaginas)
-        binding.tvDetallesAutor.text = libro.autor
+        binding.tvDetallesAutor.text = getString(R.string.nombreAutor, libro.autor)
         binding.detallesRatingBarShow.rating = libro.valoracion!!
 
         ponerImagen(titulo)
@@ -189,19 +185,21 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun ponerImagen(titulo: String) {
         val ref = storage.reference
         val file = ref.child("portadas/$titulo/portada.jpg")
+        binding.progressBarDetalles.visibility = View.VISIBLE
 
         file.metadata.addOnSuccessListener {
             file.downloadUrl.addOnSuccessListener { uri ->
                 rellenarImagen(uri)
+                binding.progressBarDetalles.visibility = View.GONE
             }
         }.addOnFailureListener {
             val defaultImg = ref.child("default/portada.jpg")
             defaultImg.downloadUrl.addOnSuccessListener {
                 rellenarImagen(it)
+                binding.progressBarDetalles.visibility = View.GONE
             }
         }
     }
-
 
     /**
      * Llama a checkFavoritoExiste, checkLeyendoExiste y checkListaEsperaExiste, dependiendo del
@@ -245,9 +243,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
-
 
     /**
      * Comprueba si el titulo existe en la base de datos, en favoritos, lista leyendo o lista de espera.

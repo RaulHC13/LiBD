@@ -34,7 +34,7 @@ class FavoritosFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        db = FirebaseDatabase.getInstance("https://libd-96d39-default-rtdb.europe-west1.firebasedatabase.app/")
+        db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
     }
 
     override fun onCreateView(

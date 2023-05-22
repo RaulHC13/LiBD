@@ -29,7 +29,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="360dp"
-            android:layout_height="380dp"
+            android:layout_height="430dp"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -40,7 +40,7 @@
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="30dp"
             android:backgroundTint="@color/colorBtnAdd"
             android:isScrollContainer="false"
             android:text="Añadir libro"
@@ -51,10 +51,10 @@
             app:iconPadding="20dp"
             app:iconSize="40dp"
             app:iconTint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
