@@ -34,7 +34,7 @@
             android:id="@+id/ivDetallesPortada"
             android:layout_width="140dp"
             android:layout_height="180dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="46dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,8 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:maxLength="30"
-            android:maxLines="4"
+            android:maxEms="8"
+            android:maxLines="2"
             android:text="Titulo"
             android:textColor="#EFEFEF"
             android:textSize="26sp"
@@ -61,8 +61,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:maxLength="30"
-            android:text="Autor"
+            android:maxEms="8"
+            android:maxLines="2"
+            android:text="@string/nombreAutor"
             android:textColor="#EFEFEF"
             android:textSize="20sp"
             android:textStyle="italic"
@@ -89,9 +90,9 @@
             android:id="@+id/detallesRatingBarShow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:focusedByDefault="false"
-            android:isIndicator="true"
+            android:isIndicator="false"
             android:numStars="5"
             android:progressTint="#E7B917"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +111,7 @@
             app:srcCompat="@drawable/baseline_bookmark_border_24" />
 
         <ImageView
-            android:id="@+id/ivDetallesLeyendo"
+            android:id="@+id/ivDetallesLeidos"
             android:layout_width="100px"
             android:layout_height="100px"
             app:layout_constraintBottom_toBottomOf="@+id/ivDetallesFavoritos"
@@ -139,6 +140,20 @@
             app:layout_constraintEnd_toEndOf="@+id/ivDetallesPortada"
             app:layout_constraintStart_toStartOf="@+id/ivDetallesPortada"
             app:layout_constraintTop_toTopOf="@+id/ivDetallesPortada" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Da tu valoracion"
+            android:textColor="#F6C139"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/detallesRatingBarShow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

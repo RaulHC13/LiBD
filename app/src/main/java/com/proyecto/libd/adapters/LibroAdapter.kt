@@ -9,7 +9,6 @@ import com.proyecto.libd.model.Libro
 class LibroAdapter(var lista: ArrayList<Libro>,
                    var onItemSelected: (Libro) -> Unit): RecyclerView.Adapter<LibroViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibroViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.libro_layout, parent, false)
         return LibroViewHolder(v)
@@ -21,4 +20,3 @@ class LibroAdapter(var lista: ArrayList<Libro>,
 
     override fun getItemCount() = lista.size
 }
-

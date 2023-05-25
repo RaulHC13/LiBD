@@ -7,6 +7,8 @@
 
     <string name="numPaginas">%d paginas</string>
     <string name="nombreAutor">Autor: %s</string>
+    <string name="numValoraciones">(%d valoraciones)</string>
+    <string name="numValoracion">(%d valoracion)</string>
     <string name="storageURL">gs://libd-96d39.appspot.com/</string>
     <string name="databaseURL">https://libd-96d39-default-rtdb.europe-west1.firebasedatabase.app/</string>
     <string name="idToken">174343878081-9o233u6st1l677sh9o91u8tfojfs6pj9.apps.googleusercontent.com</string>

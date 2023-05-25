@@ -8,7 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorLogin">#809F9F9F</color>
-    <color name="colorHome">#4E4E4E</color>
+    <color name="colorHome">#F5404040</color>
     <color name="colorBuscar">#3AB7D6</color>
     <color name="colorBtnAdd">#944E4E4E</color>
     <color name="colorChat">#CC787474</color>
@@ -21,4 +21,5 @@
     <color name="colorDetalles">#78614D</color>
     <color name="colorChat1">#69C04A</color>
     <color name="colorChat2">#848BE3</color>
+    <color name="onSelect">#5FEAB2</color>
 </resources>

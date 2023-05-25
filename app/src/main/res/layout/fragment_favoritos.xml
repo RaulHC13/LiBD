@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.proyecto.libd.fragments.FavoritosFragment"
-    android:background="@color/color2">
+    android:background="@drawable/fondo_favoritos"
+    tools:context="com.proyecto.libd.fragments.FavoritosFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,7 +14,9 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
+            android:background="#668A8A8A"
+            android:padding="20px"
             android:text="Libros favoritos"
             android:textColor="#FFFFFF"
             android:textSize="26sp"
@@ -28,7 +30,7 @@
             android:id="@+id/recyclerFavoritos"
             android:layout_width="360dp"
             android:layout_height="560dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:text="No hay libros favoritos"
+            android:textColor="#FFFFFF"
             android:textSize="26sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

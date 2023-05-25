@@ -13,10 +13,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.proyecto.libd.view.CrearActivity
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.model.Libro
+import com.proyecto.libd.view.CrearActivity
 import com.proyecto.libd.view.LibrosDetallesActivity
 
 class HomeFragment : Fragment() {
@@ -67,6 +67,7 @@ class HomeFragment : Fragment() {
                             listaLibrosInicial.add(libro)
                         }
                     }
+
                     listaLibrosInicial.sortByDescending { libro -> libro.fecha }
                     libros10 = ArrayList(listaLibrosInicial.take(10))
                     adapter.lista = libros10

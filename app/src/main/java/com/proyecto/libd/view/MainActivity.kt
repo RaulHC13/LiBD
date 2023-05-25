@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     private fun setPerfil() {
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
-
         val auxEmail = headerView.findViewById<TextView>(R.id.tvNavEmail)
         val auxNombre = headerView.findViewById<TextView>(R.id.tvNavUsername)
         val auxImagenperfil = headerView.findViewById<CircleImageView>(R.id.ivNavPerfil)
@@ -88,9 +87,9 @@ class MainActivity : AppCompatActivity() {
                     cambiarFragment(ChatFragment(), it.title.toString())
                     selectedItem = R.id.nav_chat
                 }
-                R.id.nav_leyendo -> {
-                    cambiarFragment(LeyendoFragment(), it.title.toString())
-                    selectedItem = R.id.nav_leyendo
+                R.id.nav_leido -> {
+                    cambiarFragment(LeidosFragment(), it.title.toString())
+                    selectedItem = R.id.nav_leido
                 }
                 R.id.nav_list -> {
                     cambiarFragment(ListaEsperaFragment(), it.title.toString())
@@ -116,7 +115,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, OpcionesActivity::class.java))
                     selectedItem = R.id.nav_config
                 }
-
                 R.id.nav_logout -> {
                     FirebaseAuth.getInstance().signOut()
                     prefs.borrarEmail()

@@ -8,14 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libd.R
-import com.example.libd.databinding.FragmentBuscarBinding
 import com.example.libd.databinding.FragmentFavoritosBinding
-import com.example.libd.databinding.FragmentHomeBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.model.Libro
@@ -58,7 +55,7 @@ class FavoritosFragment : Fragment() {
     }
 
     /**
-     * Recoger en una lista el nombre de todos los libros favoritos.
+     * Recoger en una lista el nombre de todos los libros favoritos por usuario.
      */
     private fun getFavoritosNombres() {
         db.getReference("usuarios/$emailFormateado/favoritos").addValueEventListener(object : ValueEventListener {

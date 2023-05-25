@@ -95,6 +95,7 @@ class ListaEsperaFragment : Fragment() {
                     adapter.lista = listaEspera
                     adapter.notifyDataSetChanged()
                 }
+
                 if (listaEspera.isEmpty()) {
                     binding.tvListaEsperaFragment.visibility = View.VISIBLE
                 } else {

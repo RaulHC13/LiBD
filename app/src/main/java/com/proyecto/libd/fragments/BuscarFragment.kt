@@ -20,12 +20,6 @@ import com.proyecto.libd.view.LibrosDetallesActivity
 
 class BuscarFragment : Fragment() {
 
-
-    /**
-     * Tiene que aparecer todos los libros al abrir el fragment, de momento no salen al abrirlo
-     * pero el resto funciona OK.
-     */
-
     private lateinit var binding: FragmentBuscarBinding
     lateinit var adapter: LibroAdapter
     lateinit var db: FirebaseDatabase
@@ -35,7 +29,6 @@ class BuscarFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
     }
 
@@ -73,6 +66,9 @@ class BuscarFragment : Fragment() {
         })
     }
 
+    /**
+     * Toma todos los libros de la base de datos y los carga en librosInicial
+     */
     private fun traerLibrosInicial() {
         db.getReference("libros").addValueEventListener(object: ValueEventListener {
 
@@ -111,7 +107,6 @@ class BuscarFragment : Fragment() {
                     librosBuscar.add(libro)
                 }
             }
-
         } else {
             librosBuscar.addAll(librosInicial)
         }

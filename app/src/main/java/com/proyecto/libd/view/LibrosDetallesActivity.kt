@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.libd.R
@@ -16,31 +17,36 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.model.Libro
+import kotlin.math.round
 
 class LibrosDetallesActivity : AppCompatActivity() {
 
     lateinit var binding: LibrosDetallesLayoutBinding
     lateinit var db: FirebaseDatabase
     lateinit var prefs: Prefs
-    private val storage = FirebaseStorage.getInstance(binding.tvDetallesAutor.resources.getString(R.string.storageURL))
+    lateinit var storage: FirebaseStorage
 
     private var titulo = ""
     private var emailFormateado = ""
+    private var drawableResourceFav = 0
+    private var drawableResourceEspera = 0
+    private var drawableResourceLeidos = 0
+    private var numValoraciones = 0
+    private var oldValoracion = 0.0f
+    private var newValoracion = 0.0f
+    private var estaValorado = false
 
-    var drawableResourceFav = 0
-    var drawableResourceEspera = 0
-    var drawableResourceLeyendo = 0
     lateinit var ivFavoritos: ImageView
     lateinit var ivEspera: ImageView
-    lateinit var ivLeyendo: ImageView
+    lateinit var ivLeidos: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LibrosDetallesLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
+        storage = FirebaseStorage.getInstance(getString(R.string.storageURL))
         prefs = Prefs(this)
-        emailFormateado = prefs.getEmailFormateado().toString()
 
         getLibro()
         setVariables()
@@ -51,6 +57,32 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.ivDetallesVolver.setOnClickListener {
             finish()
+        }
+
+        binding.detallesRatingBarShow.onRatingBarChangeListener = object: RatingBar.OnRatingBarChangeListener {
+
+            /**
+             * Comprueba si el usuario ha valorado el libro antes, si es asi, no se suma 1 a numValoraciones
+             * y se valora, si no es asi, se suma 1 y ademas se actualiza numValoraciones en la BD.
+             * Se calcula la nueva valoracion y se llama a valorar para actualizarla en la BD.
+             * La valoracion se redondea a un decimal.
+             */
+            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+                if (estaValorado) {
+                    newValoracion = oldValoracion + (rating - oldValoracion) / numValoraciones
+                    newValoracion = round(newValoracion * 10)/10
+
+                    valorar(newValoracion)
+                } else if (!estaValorado) {
+                    numValoraciones++
+                    newValoracion = oldValoracion + (rating - oldValoracion) / numValoraciones
+                    newValoracion = round(newValoracion * 10)/10
+
+                    updateNumValoraciones(numValoraciones)
+                    valorar(newValoracion)
+                    addValorados()
+                }
+            }
         }
 
         binding.ivDetallesFavoritos.setOnClickListener {
@@ -66,7 +98,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
                 ivFavoritos.setImageResource(R.drawable.ic_baseline_favorite_24)
                 drawableResourceFav = R.drawable.ic_baseline_favorite_24
 
-                //Es favorito
+            //Es favorito
             } else if (drawableResourceFav == R.drawable.ic_baseline_favorite_24) {
                 quitarFavorito()
                 ivFavoritos.setImageResource(R.drawable.baseline_favorite_border_24)
@@ -82,7 +114,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
                 ivEspera.setImageResource(R.drawable.ic_baseline_bookmark_24)
                 drawableResourceEspera = R.drawable.ic_baseline_bookmark_24
 
-                //Esta en la lista de espera
+            //Esta en la lista de espera
             } else if (drawableResourceEspera == R.drawable.ic_baseline_bookmark_24) {
                 quitarListaEspera()
                 ivEspera.setImageResource(R.drawable.baseline_bookmark_border_24)
@@ -90,19 +122,19 @@ class LibrosDetallesActivity : AppCompatActivity() {
             }
         }
 
-        binding.ivDetallesLeyendo.setOnClickListener {
+        binding.ivDetallesLeidos.setOnClickListener {
 
             //No esta en la lista de leyendo
-            if (drawableResourceLeyendo == R.drawable.ic_baseline_menu_book_24) {
-                addLeyendo()
-                ivLeyendo.setImageResource(R.drawable.ic_baseline_menu_book_blue_24)
-                drawableResourceLeyendo = R.drawable.ic_baseline_menu_book_blue_24
+            if (drawableResourceLeidos == R.drawable.ic_baseline_menu_book_24) {
+                addLeidos()
+                ivLeidos.setImageResource(R.drawable.ic_baseline_menu_book_blue_24)
+                drawableResourceLeidos = R.drawable.ic_baseline_menu_book_blue_24
 
-                //Esta en la lista de leyendo
-            } else if (drawableResourceLeyendo == R.drawable.ic_baseline_menu_book_blue_24) {
-                quitarLeyendo()
-                ivLeyendo.setImageResource(R.drawable.ic_baseline_menu_book_24)
-                drawableResourceLeyendo = R.drawable.ic_baseline_menu_book_24
+            //Esta en la lista de leyendo
+            } else if (drawableResourceLeidos == R.drawable.ic_baseline_menu_book_blue_24) {
+                quitarLeidos()
+                ivLeidos.setImageResource(R.drawable.ic_baseline_menu_book_24)
+                drawableResourceLeidos = R.drawable.ic_baseline_menu_book_24
             }
         }
     }
@@ -114,7 +146,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun addFavorito() {
 
         db.getReference("usuarios/$emailFormateado/favoritos").child(titulo).setValue(titulo).addOnSuccessListener {
-            Toast.makeText(this, "Se ha añadido $titulo a favoritos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha añadido a favoritos", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al añadir a favoritos", Toast.LENGTH_SHORT).show()
         }
@@ -123,7 +155,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun quitarFavorito() {
 
         db.getReference("usuarios/$emailFormateado/favoritos").child(titulo).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Se ha eliminado $titulo de favoritos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha eliminado de favoritos", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al eliminar de favoritos,", Toast.LENGTH_SHORT).show()
         }
@@ -132,7 +164,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun addListaEspera() {
 
         db.getReference("usuarios/$emailFormateado/listaEspera").child(titulo).setValue(titulo).addOnSuccessListener {
-            Toast.makeText(this, "Se ha añadido $titulo a la lista de espera", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha añadido a la lista de espera", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al añadir a la lista de espera", Toast.LENGTH_SHORT).show()
         }
@@ -141,27 +173,34 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun quitarListaEspera() {
 
         db.getReference("usuarios/$emailFormateado/listaEspera").child(titulo).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Se ha eliminado $titulo de la lista de espera", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha eliminado de la lista de espera", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al eliminar de la lista de espera", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun addLeyendo() {
+    private fun addLeidos() {
 
         db.getReference("usuarios/$emailFormateado/listaLectura").child(titulo).setValue(titulo).addOnSuccessListener {
-            Toast.makeText(this, "Se ha añadido $titulo a la lista de lectura", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha añadido a leidos", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
-            Toast.makeText(this, "Ha ocurrido un error al añadir a la lista de lectura", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Ha ocurrido un error al añadir a leidos", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun quitarLeyendo() {
+    private fun quitarLeidos() {
 
         db.getReference("usuarios/$emailFormateado/listaLectura").child(titulo).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Se ha eliminado $titulo de la lista de lectura", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Se ha eliminado de leidos", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
-            Toast.makeText(this, "Ha ocurrido un error al eliminar de la lista de lectura,", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Ha ocurrido un error al eliminar de leidos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun addValorados() {
+
+        db.getReference("usuarios/$emailFormateado/valorados").child(titulo).setValue(titulo).addOnFailureListener {
+            Toast.makeText(this, "Ha ocurrido un error al añadir a valorados", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -174,6 +213,9 @@ class LibrosDetallesActivity : AppCompatActivity() {
         val libro = datos?.getSerializable("LIBRO") as Libro
 
         titulo = libro.titulo
+        numValoraciones = libro.numValoraciones
+        oldValoracion = libro.valoracion
+
         binding.tvDetallesTitulo.text = titulo
         binding.tvDetallesPaginas.text = getString(R.string.numPaginas, libro.numPaginas)
         binding.tvDetallesAutor.text = getString(R.string.nombreAutor, libro.autor)
@@ -220,14 +262,14 @@ class LibrosDetallesActivity : AppCompatActivity() {
             }
         }
 
-        checkLeyendoExiste { exists ->
+        checkLeidoExiste { exists ->
             runOnUiThread {
                 if (exists) {
-                    ivLeyendo.setImageResource(R.drawable.ic_baseline_menu_book_blue_24)
-                    drawableResourceLeyendo = R.drawable.ic_baseline_menu_book_blue_24
+                    ivLeidos.setImageResource(R.drawable.ic_baseline_menu_book_blue_24)
+                    drawableResourceLeidos = R.drawable.ic_baseline_menu_book_blue_24
                 } else {
-                    ivLeyendo.setImageResource(R.drawable.ic_baseline_menu_book_24)
-                    drawableResourceLeyendo = R.drawable.ic_baseline_menu_book_24
+                    ivLeidos.setImageResource(R.drawable.ic_baseline_menu_book_24)
+                    drawableResourceLeidos = R.drawable.ic_baseline_menu_book_24
                 }
             }
         }
@@ -242,6 +284,10 @@ class LibrosDetallesActivity : AppCompatActivity() {
                     drawableResourceEspera = R.drawable.baseline_bookmark_border_24
                 }
             }
+        }
+
+        checkValoradoExiste { exists ->
+            if (exists) estaValorado = true
         }
     }
 
@@ -264,7 +310,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
         })
     }
 
-    private fun checkLeyendoExiste(callback: (Boolean) -> Unit) {
+    private fun checkLeidoExiste(callback: (Boolean) -> Unit) {
         val favoritosRef = db.getReference("usuarios/$emailFormateado/listaLectura").child(titulo)
 
         favoritosRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -294,13 +340,57 @@ class LibrosDetallesActivity : AppCompatActivity() {
         })
     }
 
+    private fun checkValoradoExiste(callback: (Boolean) -> Unit) {
+        val ref = db.getReference("usuarios/$emailFormateado/valorados").child(titulo)
+
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val existe = snapshot.exists()
+                callback(existe)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(false)
+            }
+        })
+    }
+
+    /**
+     * Hace un update del campo valoracion utilizando un mapa, guarda la nueva valoracion
+     * y pone la bandera a true para que no se sume 1 a numValoraciones en el futuro.
+     */
+    private fun valorar(newValoracion: Float) {
+        val ref = db.getReference("libros/$titulo")
+        val update = mapOf("valoracion" to newValoracion)
+
+        ref.updateChildren(update).addOnSuccessListener {
+            if(estaValorado){
+                Toast.makeText(this, "Se ha actualizado la valoracion", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Se ha valorado el libro", Toast.LENGTH_SHORT).show()
+            }
+            estaValorado = true
+        }.addOnFailureListener {
+            Toast.makeText(this, "Ha ocurrido un error al valorar el libro", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateNumValoraciones(numValoraciones: Int) {
+        val ref = db.getReference("libros/$titulo")
+        val update = mapOf("numValoraciones" to numValoraciones)
+        ref.updateChildren(update).addOnFailureListener {
+            Toast.makeText(this, "ERROR EN UPDATE NUMVALORACIONES", Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun setVariables() {
+        emailFormateado = prefs.getEmailFormateado().toString()
         drawableResourceFav = R.drawable.baseline_favorite_border_24
         drawableResourceEspera = R.drawable.baseline_bookmark_border_24
-        drawableResourceLeyendo = R.drawable.ic_baseline_menu_book_24
+        drawableResourceLeidos = R.drawable.ic_baseline_menu_book_24
         ivFavoritos = binding.ivDetallesFavoritos
         ivEspera= binding.ivDetallesListaEspera
-        ivLeyendo= binding.ivDetallesLeyendo
+        ivLeidos= binding.ivDetallesLeidos
     }
 
     private fun rellenarImagen(uri: Uri?) {

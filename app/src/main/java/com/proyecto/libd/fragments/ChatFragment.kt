@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.libd.R
-import com.example.libd.databinding.FragmentBuscarBinding
 import com.example.libd.databinding.FragmentChatBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -102,7 +100,6 @@ class ChatFragment : Fragment() {
      */
     private fun traerMensaje() {
         db.getReference("chat").addValueEventListener(object: ValueEventListener {
-
             override fun onDataChange(snapshot: DataSnapshot) {
                 lista.clear()
                 if (snapshot.exists()) {

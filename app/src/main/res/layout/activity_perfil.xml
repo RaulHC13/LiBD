@@ -4,28 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#977250"
+    android:background="@drawable/fondo_perfil"
     tools:context="com.proyecto.libd.view.PerfilActivity">
 
     <ImageView
         android:id="@+id/ivPerfil"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="24dp"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
         tools:srcCompat="@drawable/perfil_generico" />
 
     <Button
         android:id="@+id/btnPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:backgroundTint="#4D1E6EF6"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="#002878C8"
         android:text="Aplicar cambios"
         app:icon="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,13 +37,13 @@
         android:id="@+id/tvPerfilUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:text="Username"
-        android:textColor="#1F37BD"
+        android:textColor="#FFFFFF"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPerfil" />
 
@@ -51,7 +51,7 @@
         android:id="@+id/etPerfilUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Introduce un nombre"
         android:inputType="textPersonName"
@@ -59,5 +59,19 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPerfilUsername" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Foto de perfil"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

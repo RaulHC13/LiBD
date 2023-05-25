@@ -11,6 +11,7 @@ import com.example.libd.R
 import com.example.libd.databinding.ActivityCrearBinding
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.proyecto.libd.Prefs
 import com.proyecto.libd.model.Libro
 
 class CrearActivity : AppCompatActivity() {
@@ -26,11 +27,14 @@ class CrearActivity : AppCompatActivity() {
     lateinit var binding: ActivityCrearBinding
     lateinit var db: FirebaseDatabase
     lateinit var storage: FirebaseStorage
+    lateinit var prefs: Prefs
 
     private var titulo = ""
     private var numPaginas = 0
     private var autor = ""
     private var valoracion = 0.0f
+    private var numValoraciones = 0
+    private var emailFormateado = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,9 @@ class CrearActivity : AppCompatActivity() {
         setContentView(binding.root)
         db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
         storage = FirebaseStorage.getInstance(binding.etAutor.resources.getString(R.string.storageURL))
+        prefs = Prefs(this)
 
+        emailFormateado = prefs.getEmailFormateado().toString()
         setListeners()
     }
 
@@ -46,7 +52,6 @@ class CrearActivity : AppCompatActivity() {
         binding.btnVolver.setOnClickListener {
             finish()
         }
-
         binding.btnCrear.setOnClickListener {
             crearLibro()
         }
@@ -55,10 +60,16 @@ class CrearActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Crea el libro a partir de la informacion recogida de los campos obligatorios y no obligatorios
+     * en caso de existir. Los sube a la base de datos.
+     */
     private fun crearLibro() {
 
         if (!comprobarDatos()) return
-        val libro = Libro(titulo = titulo, numPaginas = numPaginas, autor = autor, valoracion = valoracion)
+        val libro = Libro(titulo = titulo, numPaginas = numPaginas, autor = autor, valoracion = valoracion, numValoraciones = numValoraciones)
+
+        if (numValoraciones != 0) addValorados()
 
         val ref = db.getReference("libros")
         ref.child(libro.titulo).setValue(libro).addOnSuccessListener {
@@ -68,10 +79,13 @@ class CrearActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Comprueba que los datos han sido cumplimentados apropiadamente.
+     */
     private fun comprobarDatos(): Boolean {
 
         titulo = binding.etNombre.text.toString().trim()
-        if (titulo.length < 2 || titulo.length > 22) {
+        if (titulo.length < 2 || titulo.length > 32) {
             binding.etNombre.requestFocus()
             binding.etNombre.error = "Titulo no válido"
             return false
@@ -85,10 +99,18 @@ class CrearActivity : AppCompatActivity() {
         }
 
         autor = binding.etAutor.text.toString().trim()
+
+        if (!autor.isNullOrBlank() && (autor.length < 2 || autor.length > 32)){
+            binding.etAutor.requestFocus()
+            binding.etAutor.error = "Autor no valido"
+            return false
+        }
+
         if (autor.isNullOrBlank()) autor = "Desconocido"
 
-
         valoracion = binding.ratingBar.rating
+        if (valoracion != 0.0f) numValoraciones++
+
         numPaginas = binding.etPaginas.text.toString().toInt()
         return true
     }
@@ -102,12 +124,17 @@ class CrearActivity : AppCompatActivity() {
         }
     }
 
+    private fun addValorados() {
+
+        db.getReference("usuarios/$emailFormateado/valorados").child(titulo).setValue(titulo).addOnFailureListener {
+            Toast.makeText(this, "Ha ocurrido un error al añadir a valorados", Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun rellenarImagen(uri: Uri?) {
         Glide.with(binding.ivCrearPortada.context)
             .load(uri)
             .centerCrop()
             .into(binding.ivCrearPortada)
     }
-
-
 }

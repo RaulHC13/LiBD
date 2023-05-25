@@ -3,7 +3,6 @@ package com.proyecto.libd.view
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
@@ -41,7 +40,6 @@ class PerfilActivity : AppCompatActivity() {
         prefs = Prefs(this)
         storage = FirebaseStorage.getInstance(binding.ivPerfil.resources.getString(R.string.storageURL))
         email = prefs.getEmail().toString()
-
         binding.tvPerfilUsername.text = prefs.getUsername()
 
         imagenOnStart()

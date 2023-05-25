@@ -54,6 +54,11 @@ class ValoracionesFragment : Fragment() {
     }
 
 
+    /**
+     * Trae libros de la base de datos, y si tienen valoracion, los mete a librosLista.
+     * La lista se ordena por valoraciones y se crea librosTop10 tomando los 10 primeros
+     * de librosLista.
+     */
     private fun traerTopLibros() {
 
         db.getReference("libros").addValueEventListener(object: ValueEventListener {

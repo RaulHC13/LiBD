@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.libd.R
-import com.example.libd.databinding.FragmentFavoritosBinding
-import com.example.libd.databinding.FragmentLeyendoBinding
+import com.example.libd.databinding.FragmentLeidosBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,15 +18,15 @@ import com.proyecto.libd.adapters.LibroAdapter
 import com.proyecto.libd.model.Libro
 import com.proyecto.libd.view.LibrosDetallesActivity
 
-class LeyendoFragment : Fragment() {
+class LeidosFragment : Fragment() {
 
-    private lateinit var binding: FragmentLeyendoBinding
+    private lateinit var binding: FragmentLeidosBinding
     lateinit var adapter: LibroAdapter
     lateinit var db: FirebaseDatabase
     lateinit var prefs: Prefs
 
-    private var listaNombresLeyendo = ArrayList<String>()
-    private var listaLeyendo = ArrayList<Libro>()
+    private var listaNombresLeidos = ArrayList<String>()
+    private var listaLeidos = ArrayList<Libro>()
     private var emailFormateado = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class LeyendoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLeyendoBinding.inflate(inflater, container, false)
+        binding = FragmentLeidosBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,29 +47,29 @@ class LeyendoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prefs = Prefs(requireContext())
         emailFormateado = prefs.getEmailFormateado().toString()
-        binding.tvLeyendoFragment.visibility = if (listaLeyendo.isEmpty()) View.VISIBLE else View.INVISIBLE
+        binding.tvLeidosFragment.visibility = if (listaLeidos.isEmpty()) View.VISIBLE else View.INVISIBLE
 
-        getLeyendoNombres()
-        getLeyendo()
+        getLeidosNombres()
+        getLeidos()
         setRecycler()
     }
 
     /**
      * Recoger en una lista el nombre de todos los libros en lista de lectura.
      */
-    private fun getLeyendoNombres() {
+    private fun getLeidosNombres() {
         db.getReference("usuarios/$emailFormateado/listaLectura").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                listaNombresLeyendo.clear()
+                listaNombresLeidos.clear()
                 if (snapshot.exists()) {
                     for (item in snapshot.children) {
                         val nombre = item.getValue(String::class.java)
                         if (nombre != null) {
-                            listaNombresLeyendo.add(nombre)
+                            listaNombresLeidos.add(nombre)
                         }
                     }
                 }
-                getLeyendo()
+                getLeidos()
             }
             override fun onCancelled(error: DatabaseError) {}
         })
@@ -78,28 +77,28 @@ class LeyendoFragment : Fragment() {
 
     /**
      * Se hace una query buscando todos los libros de la db y, si el titulo de un libro
-     * existe en la listaNombresLeyendo, se añade a listaLeyendo.
+     * existe en la listaNombresLeidos, se añade a listaLeidos.
      */
-    private fun getLeyendo() {
+    private fun getLeidos() {
         db.getReference("libros").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                listaLeyendo.clear()
+                listaLeidos.clear()
                 if (snapshot.exists()) {
                     for (item in snapshot.children) {
                         val libro = item.getValue(Libro::class.java)
-                        if (listaNombresLeyendo.contains(libro?.titulo)) {
+                        if (listaNombresLeidos.contains(libro?.titulo)) {
                             if (libro != null) {
-                                listaLeyendo.add(libro)
+                                listaLeidos.add(libro)
                             }
                         }
                     }
-                    adapter.lista = listaLeyendo
+                    adapter.lista = listaLeidos
                     adapter.notifyDataSetChanged()
                 }
-                if (listaLeyendo.isEmpty()) {
-                    binding.tvLeyendoFragment.visibility = View.VISIBLE
+                if (listaLeidos.isEmpty()) {
+                    binding.tvLeidosFragment.visibility = View.VISIBLE
                 } else {
-                    binding.tvLeyendoFragment.visibility = View.INVISIBLE
+                    binding.tvLeidosFragment.visibility = View.INVISIBLE
                 }
             }
 
@@ -109,10 +108,10 @@ class LeyendoFragment : Fragment() {
 
     private fun setRecycler() {
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerValoraciones.layoutManager = layoutManager
+        binding.recyclerLeidos.layoutManager = layoutManager
 
-        adapter = LibroAdapter(listaLeyendo) { onItemSelected(it) }
-        binding.recyclerValoraciones.adapter = adapter
+        adapter = LibroAdapter(listaLeidos) { onItemSelected(it) }
+        binding.recyclerLeidos.adapter = adapter
     }
 
     private fun onItemSelected(libro: Libro) {
