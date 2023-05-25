@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".view.CrearActivity">
+    tools:context="com.proyecto.libd.view.CrearActivity">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="314dp"
-        android:layout_height="368dp"
+        android:layout_width="320dp"
+        android:layout_height="420dp"
         android:layout_marginBottom="200dp"
-        android:backgroundTint="@color/colorAddCard"
-        app:cardCornerRadius="20dp"
+        android:backgroundTint="#D64C4C4C"
+        app:cardCornerRadius="16dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,18 +25,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <RatingBar
-                android:id="@+id/ratingBarEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="76dp"
-                android:numStars="5"
-                android:progressTint="#E7B917"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/etNombre"
@@ -79,6 +67,42 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etNombre" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Añade una imagen"
+                android:textColor="#D1FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etAutor" />
+
+            <ImageView
+                android:id="@+id/ivCrearPortada"
+                android:layout_width="66dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_baseline_menu_book_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingTop="6dp"
+                android:progressTint="#F3A345"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivCrearPortada" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

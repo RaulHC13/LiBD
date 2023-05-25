@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/colorDetalles"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.5">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivDetallesVolver"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+        <ImageView
+            android:id="@+id/ivDetallesPortada"
+            android:layout_width="140dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="46dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDetallesTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:maxEms="8"
+            android:maxLines="2"
+            android:text="Titulo"
+            android:textColor="#EFEFEF"
+            android:textSize="26sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivDetallesPortada" />
+
+        <TextView
+            android:id="@+id/tvDetallesAutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:maxEms="8"
+            android:maxLines="2"
+            android:text="@string/nombreAutor"
+            android:textColor="#EFEFEF"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetallesTitulo" />
+
+        <TextView
+            android:id="@+id/tvDetallesPaginas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/numPaginas"
+            android:textColor="#EFEFEF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetallesAutor" />
+
+        <RatingBar
+            android:id="@+id/detallesRatingBarShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:focusedByDefault="false"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:progressTint="#E7B917"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDetallesPaginas" />
+
+        <ImageView
+            android:id="@+id/ivDetallesListaEspera"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/baseline_bookmark_border_24" />
+
+        <ImageView
+            android:id="@+id/ivDetallesLeidos"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetallesFavoritos"
+            app:layout_constraintEnd_toStartOf="@+id/ivDetallesFavoritos"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivDetallesListaEspera"
+            app:layout_constraintTop_toTopOf="@+id/ivDetallesFavoritos"
+            app:srcCompat="@drawable/ic_baseline_menu_book_24" />
+
+        <ImageView
+            android:id="@+id/ivDetallesFavoritos"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/baseline_favorite_border_24" />
+
+        <ProgressBar
+            android:id="@+id/progressBarDetalles"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetallesPortada"
+            app:layout_constraintEnd_toEndOf="@+id/ivDetallesPortada"
+            app:layout_constraintStart_toStartOf="@+id/ivDetallesPortada"
+            app:layout_constraintTop_toTopOf="@+id/ivDetallesPortada" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Da tu valoracion"
+            android:textColor="#F6C139"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/detallesRatingBarShow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
