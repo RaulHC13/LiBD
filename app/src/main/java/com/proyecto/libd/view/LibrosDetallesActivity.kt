@@ -429,6 +429,11 @@ class LibrosDetallesActivity : AppCompatActivity() {
         ivLeidos= binding.ivDetallesLeidos
     }
 
+    /**
+     * Busca en el mapa la valoracion de este libro para este usuario.
+     * Si encuentra una valoracion, la introduce en detallesRatingBarShow, si no encuentra, no existe
+     * y no introduce nada. Pone booleanRatingBar a true en ambos casos
+     */
     private fun getValoracionUsuario() {
         val ref = db.getReference("libros/$titulo").child("valoracionUsuario")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
