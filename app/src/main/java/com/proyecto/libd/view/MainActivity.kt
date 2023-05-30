@@ -206,6 +206,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Busca el username para este usuario, si no encuentra, genera uno y en ambos casos se le
+     * da como valor a auxNombre para que se muestre en el nav header
+     */
     private fun setUsername(auxNombre: TextView) {
         val ref = db.getReference("usuarios/$emailFormateado")
 
