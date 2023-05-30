@@ -22,4 +22,5 @@
     <color name="colorChat1">#69C04A</color>
     <color name="colorChat2">#848BE3</color>
     <color name="onSelect">#5FEAB2</color>
+    <color name="statusBarColor">#E63C3C3C</color>
 </resources>

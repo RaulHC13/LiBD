@@ -55,7 +55,7 @@ class ListaEsperaFragment : Fragment() {
     }
 
     /**
-     * Recoger en una lista el nombre de todos los libros en lista de espera.
+     * Recoge en una lista el nombre de todos los libros en lista de espera.
      */
     private fun getEsperaNombres() {
         db.getReference("usuarios/$emailFormateado/listaEspera").addValueEventListener(object : ValueEventListener {

@@ -120,7 +120,6 @@ class BuscarFragment : Fragment() {
     }
 
     private fun setRecycler() {
-
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerBuscar.layoutManager = layoutManager
 
@@ -132,5 +131,10 @@ class BuscarFragment : Fragment() {
         val i = Intent(requireActivity(), LibrosDetallesActivity::class.java)
         i.putExtra("LIBRO", libro)
         startActivity(i)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.svBuscar.setQuery("", false)
     }
 }

@@ -55,6 +55,10 @@ class HomeFragment : Fragment() {
         traerLibros()
     }
 
+    /**
+     * Carga libros en listaLibrosInicial, los ordena por fecha y toma los 10 primeros libros,
+     * los mete en libros10, que es la lista que se carga en setRecycler()
+     */
     private fun traerLibros() {
         db.getReference("libros").addValueEventListener(object: ValueEventListener {
 

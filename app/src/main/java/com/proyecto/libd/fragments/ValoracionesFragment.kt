@@ -53,7 +53,6 @@ class ValoracionesFragment : Fragment() {
         traerTopLibros()
     }
 
-
     /**
      * Trae libros de la base de datos, y si tienen valoracion, los mete a librosLista.
      * La lista se ordena por valoraciones y se crea librosTop10 tomando los 10 primeros
@@ -84,8 +83,7 @@ class ValoracionesFragment : Fragment() {
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 

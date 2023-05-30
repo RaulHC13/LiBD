@@ -18,17 +18,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/ivDetallesVolver"
-            android:layout_width="80px"
-            android:layout_height="80px"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_detalles">
 
         <ImageView
             android:id="@+id/ivDetallesPortada"
@@ -61,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:maxEms="8"
+            android:maxEms="12"
             android:maxLines="2"
             android:text="@string/nombreAutor"
             android:textColor="#EFEFEF"
@@ -94,7 +85,9 @@
             android:focusedByDefault="false"
             android:isIndicator="false"
             android:numStars="5"
+            android:progressBackgroundTint="#4DFFFFFF"
             android:progressTint="#E7B917"
+            android:secondaryProgressTint="#E7B917"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:backgroundTint="#002878C8"
+        android:backgroundTint="#1AFFFFFF"
         android:text="Aplicar cambios"
         app:icon="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"

@@ -62,17 +62,20 @@ class CrearActivity : AppCompatActivity() {
 
     /**
      * Crea el libro a partir de la informacion recogida de los campos obligatorios y no obligatorios
-     * en caso de existir. Los sube a la base de datos.
+     * en caso de existir. Los sube a la base de datos y si se ha valorado llama a addValoracionMap,
+     * pasandole la valoracion.
      */
     private fun crearLibro() {
 
         if (!comprobarDatos()) return
         val libro = Libro(titulo = titulo, numPaginas = numPaginas, autor = autor, valoracion = valoracion, numValoraciones = numValoraciones)
 
-        if (numValoraciones != 0) addValorados()
-
         val ref = db.getReference("libros")
         ref.child(libro.titulo).setValue(libro).addOnSuccessListener {
+            if (numValoraciones != 0) {
+                addValoracionMap(valoracion)
+                addValorados()
+            }
             finish()
         }.addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
@@ -128,6 +131,17 @@ class CrearActivity : AppCompatActivity() {
 
         db.getReference("usuarios/$emailFormateado/valorados").child(titulo).setValue(titulo).addOnFailureListener {
             Toast.makeText(this, "Ha ocurrido un error al añadir a valorados", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /**
+     * Añade la valoracion del usuario para este libro.
+     */
+    private fun addValoracionMap(rating: Float) {
+        val ref = db.getReference("libros/$titulo").child("valoracionUsuario")
+        val update = mapOf(emailFormateado to rating)
+        ref.updateChildren(update).addOnFailureListener {
+            Toast.makeText(this, "ERROR AL AÑADIR MAPA VALORACION", Toast.LENGTH_SHORT).show()
         }
     }
 

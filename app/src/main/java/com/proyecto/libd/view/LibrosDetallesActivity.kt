@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.model.Libro
+import java.text.DecimalFormat
 import kotlin.math.round
 
 class LibrosDetallesActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     lateinit var db: FirebaseDatabase
     lateinit var prefs: Prefs
     lateinit var storage: FirebaseStorage
+    lateinit var libro: Libro
 
     private var titulo = ""
     private var emailFormateado = ""
@@ -32,9 +34,8 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private var drawableResourceEspera = 0
     private var drawableResourceLeidos = 0
     private var numValoraciones = 0
-    private var oldValoracion = 0.0f
-    private var newValoracion = 0.0f
     private var estaValorado = false
+    private var booleanRatingBar = false
 
     lateinit var ivFavoritos: ImageView
     lateinit var ivEspera: ImageView
@@ -55,32 +56,28 @@ class LibrosDetallesActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.ivDetallesVolver.setOnClickListener {
-            finish()
-        }
 
         binding.detallesRatingBarShow.onRatingBarChangeListener = object: RatingBar.OnRatingBarChangeListener {
 
             /**
              * Comprueba si el usuario ha valorado el libro antes, si es asi, no se suma 1 a numValoraciones
-             * y se valora, si no es asi, se suma 1 y ademas se actualiza numValoraciones en la BD.
+             * y se valora, si no es asi, se suma 1 y se añade a la lista de valorado, ademas se actualiza numValoraciones en la BD.
              * Se calcula la nueva valoracion y se llama a valorar para actualizarla en la BD.
              * La valoracion se redondea a un decimal.
              */
             override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-                if (estaValorado) {
-                    newValoracion = oldValoracion + (rating - oldValoracion) / numValoraciones
-                    newValoracion = round(newValoracion * 10)/10
+                if (!booleanRatingBar) return //Para que no se active al pasar por getValoracionUsuario al principio
 
-                    valorar(newValoracion)
-                } else if (!estaValorado) {
+                if (!estaValorado) {
                     numValoraciones++
-                    newValoracion = oldValoracion + (rating - oldValoracion) / numValoraciones
-                    newValoracion = round(newValoracion * 10)/10
-
-                    updateNumValoraciones(numValoraciones)
-                    valorar(newValoracion)
                     addValorados()
+                    updateNumValoraciones(numValoraciones)
+
+                    addValoracionMap(rating)
+                    getValoracion()
+                } else {
+                    addValoracionMap(rating)
+                    getValoracion()
                 }
             }
         }
@@ -140,7 +137,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     }
 
     /**
-     * Añaden y eliminan libros de favoritos, lista de espera y lista de lectura, se identifican
+     * Añaden y eliminan libros de favoritos, lista de espera y lista de leidos, se identifican
      * por el titulo del libro y solo contienen el propio titulo.
      */
     private fun addFavorito() {
@@ -210,17 +207,16 @@ class LibrosDetallesActivity : AppCompatActivity() {
      */
     private fun getLibro() {
         val datos = intent.extras
-        val libro = datos?.getSerializable("LIBRO") as Libro
+        libro = datos?.getSerializable("LIBRO") as Libro
 
         titulo = libro.titulo
         numValoraciones = libro.numValoraciones
-        oldValoracion = libro.valoracion
 
         binding.tvDetallesTitulo.text = titulo
         binding.tvDetallesPaginas.text = getString(R.string.numPaginas, libro.numPaginas)
         binding.tvDetallesAutor.text = getString(R.string.nombreAutor, libro.autor)
-        binding.detallesRatingBarShow.rating = libro.valoracion!!
 
+        getValoracionUsuario()
         ponerImagen(titulo)
     }
 
@@ -292,7 +288,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
     }
 
     /**
-     * Comprueba si el titulo existe en la base de datos, en favoritos, lista leyendo o lista de espera.
+     * Comprueba si el titulo existe en la base de datos, en favoritos, lista leidos o lista de espera.
      * Toma un callback como parametro y dependiendo de si el libro esta en la bd o no devuelve true o false.
      */
     private fun checkFavoritoExiste(callback: (Boolean) -> Unit) {
@@ -343,10 +339,10 @@ class LibrosDetallesActivity : AppCompatActivity() {
     private fun checkValoradoExiste(callback: (Boolean) -> Unit) {
         val ref = db.getReference("usuarios/$emailFormateado/valorados").child(titulo)
 
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val existe = snapshot.exists()
-                callback(existe)
+                val exists = snapshot.exists()
+                callback(exists)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -356,12 +352,12 @@ class LibrosDetallesActivity : AppCompatActivity() {
     }
 
     /**
-     * Hace un update del campo valoracion utilizando un mapa, guarda la nueva valoracion
-     * y pone la bandera a true para que no se sume 1 a numValoraciones en el futuro.
+     * Recibe una valoracion y la utiliza para actualizar la base de datos.
+     * Dependiendo de si el libro se ha valorado antes o no muestra un mensaje distinto.
      */
-    private fun valorar(newValoracion: Float) {
+    private fun valorar(valoracionMedia: Float) {
         val ref = db.getReference("libros/$titulo")
-        val update = mapOf("valoracion" to newValoracion)
+        val update = mapOf("valoracion" to valoracionMedia)
 
         ref.updateChildren(update).addOnSuccessListener {
             if(estaValorado){
@@ -375,6 +371,46 @@ class LibrosDetallesActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Recorre el mapa valoracionUsuario y se guarda la suma cumulativa de todas las valoraciones,
+     * para hacer la media redondeando a 1 decimal.
+     */
+    private fun getValoracion() {
+        var totalValoraciones = 0.0f
+        var valoracionMedia = 0.0f
+        val ref = db.getReference("libros/$titulo").child("valoracionUsuario")
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mapaValoracion = snapshot.value as? HashMap<String,Float>
+                mapaValoracion?.let {
+                    for ((_,valor) in mapaValoracion) {
+                        if (valor != null) {
+                            totalValoraciones += valor
+                        }
+                    }
+                    valoracionMedia = round((totalValoraciones / numValoraciones)*10)/10
+                    valorar(valoracionMedia)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    /**
+     * Un libro tiene un nodo valoracionUsuario que es un mapa clave (email) valor (valoracion)
+     * cada vez que se valora un libro se sube o se actualiza la valoracion en el mapa en firebase.
+     */
+    private fun addValoracionMap(rating: Float) {
+        val ref = db.getReference("libros/$titulo").child("valoracionUsuario")
+        val update = mapOf(emailFormateado to rating)
+        ref.updateChildren(update).addOnFailureListener {
+            Toast.makeText(this, "ERROR AL AÑADIR MAPA VALORACION", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Actualiza el numero de valoraciones de un libro.
+     */
     private fun updateNumValoraciones(numValoraciones: Int) {
         val ref = db.getReference("libros/$titulo")
         val update = mapOf("numValoraciones" to numValoraciones)
@@ -391,6 +427,22 @@ class LibrosDetallesActivity : AppCompatActivity() {
         ivFavoritos = binding.ivDetallesFavoritos
         ivEspera= binding.ivDetallesListaEspera
         ivLeidos= binding.ivDetallesLeidos
+    }
+
+    private fun getValoracionUsuario() {
+        val ref = db.getReference("libros/$titulo").child("valoracionUsuario")
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mapaValoracion = snapshot.value as? HashMap<String, Any>
+                val valoracionUsuario = mapaValoracion?.get(emailFormateado) as? Number
+                val valoracion = valoracionUsuario?.toFloat()
+                if (valoracion != null) {
+                    binding.detallesRatingBarShow.rating = valoracion
+                    booleanRatingBar = true
+                } else if (valoracion == null || valoracion == 0.0f) booleanRatingBar = true
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     private fun rellenarImagen(uri: Uri?) {

@@ -15,14 +15,14 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
     var storage = FirebaseStorage.getInstance(binding.tvTitulo.resources.getString(R.string.storageURL))
 
     fun render(libro: Libro, onItemSelected: (Libro) -> Unit) {
+
         binding.tvTitulo.text = libro.titulo
-        binding.ratingBarShow.rating = libro.valoracion!!
+        binding.ratingBarShow.rating = libro.valoracion
         if (libro.numValoraciones == 1) {
             binding.tvnumValoraciones.text = binding.tvnumValoraciones.resources.getString(R.string.numValoracion, libro.numValoraciones)
         } else {
             binding.tvnumValoraciones.text = binding.tvnumValoraciones.resources.getString(R.string.numValoraciones, libro.numValoraciones)
         }
-
 
         binding.cardViewLibro.setOnClickListener {
             onItemSelected(libro)

@@ -55,7 +55,7 @@ class LeidosFragment : Fragment() {
     }
 
     /**
-     * Recoger en una lista el nombre de todos los libros en lista de lectura.
+     * Recoge en una lista el nombre de todos los libros en lista de leidos.
      */
     private fun getLeidosNombres() {
         db.getReference("usuarios/$emailFormateado/listaLectura").addValueEventListener(object : ValueEventListener {

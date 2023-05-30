@@ -95,6 +95,7 @@ class FavoritosFragment : Fragment() {
                     adapter.lista = listaFavoritos
                     adapter.notifyDataSetChanged()
                 }
+
                 if (listaFavoritos.isEmpty()) {
                     binding.tvFavoritosFragment.visibility = View.VISIBLE
                 } else {

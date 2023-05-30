@@ -66,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
      * Crea un google client y cierra sesión para evitar problemas, después llama al responseLauncher.
      */
     private fun login() {
-
         val googleConfig = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(binding.btnLogin.resources.getString(R.string.idToken))
             .requestEmail()

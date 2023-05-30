@@ -38,7 +38,7 @@ class Prefs(c: Context) {
         return emailFormateado
     }
 
-    fun borrarEmail() {
+    fun borrarPrefs() {
         storage.edit().clear().apply()
     }
 }

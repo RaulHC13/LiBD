@@ -40,7 +40,7 @@
             android:id="@+id/tvTop10Valoraciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="36dp"
             android:background="#668A8A8A"
             android:padding="20px"
             android:text="Top 10 valoraciones"

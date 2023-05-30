@@ -3,6 +3,7 @@ package com.proyecto.libd.view
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
@@ -10,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.libd.R
 import com.example.libd.databinding.ActivityPerfilBinding
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
 
@@ -28,18 +30,24 @@ class PerfilActivity : AppCompatActivity() {
         }
     }
 
+    lateinit var db: FirebaseDatabase
     lateinit var storage: FirebaseStorage
     lateinit var binding: ActivityPerfilBinding
     lateinit var prefs: Prefs
+
     private lateinit var email: String
+    private lateinit var emailFormateado: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
         prefs = Prefs(this)
+        db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
         storage = FirebaseStorage.getInstance(binding.ivPerfil.resources.getString(R.string.storageURL))
+
         email = prefs.getEmail().toString()
+        emailFormateado = prefs.getEmailFormateado().toString()
         binding.tvPerfilUsername.text = prefs.getUsername()
 
         imagenOnStart()
@@ -53,6 +61,7 @@ class PerfilActivity : AppCompatActivity() {
 
         binding.btnPerfil.setOnClickListener {
             cambiarUsername()
+            finish()
         }
     }
 
@@ -61,14 +70,12 @@ class PerfilActivity : AppCompatActivity() {
      * En caso de dejar el campo vacio, se crea un username por defecto
      */
     private fun cambiarUsername() {
-        var newUsername: String
-        newUsername = binding.etPerfilUsername.text.toString()
-        if (newUsername.isBlank() || newUsername.isEmpty()) {
-            prefs.setDefaultUsername() //Si se deja en blanco se pone uno por defecto.
-        } else {
-            prefs.setUsername(newUsername)
+        var newUsername: String = binding.etPerfilUsername.text.toString()
+        if (newUsername.isBlank() || newUsername.isEmpty()) newUsername = prefs.getUsernameGenerado() //Si se deja en blanco se pone uno por defecto.
+
+        db.getReference("usuarios/$emailFormateado").child("username").setValue(newUsername).addOnFailureListener {
+            Toast.makeText(this, "Ha ocurrido un error al cambiar el nombre de usuario", Toast.LENGTH_LONG).show()
         }
-        finish()
     }
 
     private fun guardarImagen(uri: Uri) {

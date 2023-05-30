@@ -15,6 +15,10 @@ import com.example.libd.R
 import com.example.libd.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
 import com.proyecto.libd.fragments.*
@@ -29,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var storage: FirebaseStorage
+    private lateinit var db: FirebaseDatabase
+    private lateinit var emailFormateado: String
 
     private var selectedItem = 0
 
@@ -38,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         prefs = Prefs(this)
         email = prefs.getEmail().toString()
+        db = FirebaseDatabase.getInstance(getString(R.string.databaseURL))
         storage = FirebaseStorage.getInstance(binding.navView.resources.getString(R.string.storageURL))
 
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -49,15 +56,17 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         cambiarFragment(HomeFragment(), "Home")
         navView.menu.findItem(R.id.nav_home).isChecked = true
+        emailFormateado = prefs.getEmailFormateado().toString()
 
         setPerfil()
         setListeners()
     }
 
     /**
-     * Carga la imagen de perfil y el email en los campos del nav view.
+     * Carga la imagen de perfil, el username y el email en los campos del nav view.
      */
     private fun setPerfil() {
+
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
         val auxEmail = headerView.findViewById<TextView>(R.id.tvNavEmail)
@@ -65,8 +74,8 @@ class MainActivity : AppCompatActivity() {
         val auxImagenperfil = headerView.findViewById<CircleImageView>(R.id.ivNavPerfil)
 
         imagenOnStart(auxImagenperfil)
+        setUsername(auxNombre)
         auxEmail.text = email
-        auxNombre.text = prefs.getUsername()
     }
 
     /**
@@ -117,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_logout -> {
                     FirebaseAuth.getInstance().signOut()
-                    prefs.borrarEmail()
+                    prefs.borrarPrefs()
                     finish()
                 }
                 R.id.nav_exit -> finishAffinity()
@@ -153,9 +162,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, HomeFragment())
                 .commit()
-            //----
             navView.menu.findItem(R.id.nav_home).isChecked = true
-            //----
         } else {
             super.onBackPressed()
         }
@@ -199,9 +206,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUsername(auxNombre: TextView) {
+        val ref = db.getReference("usuarios/$emailFormateado")
+
+        ref.child("username").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val username = snapshot.getValue(String::class.java)
+                if (username != null) {
+                    auxNombre.text = username
+                } else {
+                    auxNombre.text = prefs.getUsernameGenerado()
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
     /**
      * Al volver a MainActivity, desde LibrosDetallesActivity, PerfilActivity, etc... Se selecciona
-     * el elemento del nav view pertinente.
+     * el elemento del nav view en el que estaba antes de cambiar de activity.
      */
     override fun onResume() {
         super.onResume()
