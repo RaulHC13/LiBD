@@ -231,7 +231,7 @@ class LibrosDetallesActivity : AppCompatActivity() {
                 binding.progressBarDetalles.visibility = View.GONE
             }
         }.addOnFailureListener {
-            val defaultImg = ref.child("default/portada.jpg")
+            val defaultImg = ref.child("default/portada.png")
             defaultImg.downloadUrl.addOnSuccessListener {
                 rellenarImagen(it)
                 binding.progressBarDetalles.visibility = View.GONE

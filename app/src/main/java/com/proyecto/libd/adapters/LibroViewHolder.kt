@@ -43,7 +43,7 @@ class LibroViewHolder(v: View):RecyclerView.ViewHolder(v) {
                 binding.progressBar.visibility = View.GONE
             }
         }.addOnFailureListener {
-            val defaultImg = ref.child("default/portada.jpg")
+            val defaultImg = ref.child("default/portada.png")
             defaultImg.downloadUrl.addOnSuccessListener {
                 rellenarImagen(it)
                 binding.progressBar.visibility = View.GONE
