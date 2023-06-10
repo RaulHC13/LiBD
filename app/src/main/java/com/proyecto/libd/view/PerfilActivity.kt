@@ -3,6 +3,7 @@ package com.proyecto.libd.view
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,7 +12,10 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.libd.R
 import com.example.libd.databinding.ActivityPerfilBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.proyecto.libd.Prefs
 
@@ -50,8 +54,25 @@ class PerfilActivity : AppCompatActivity() {
         emailFormateado = prefs.getEmailFormateado().toString()
         binding.tvPerfilUsername.text = prefs.getUsername()
 
+        getUsernameDB()
         imagenOnStart()
         setListeners()
+    }
+
+    private fun getUsernameDB() {
+        val ref = db.getReference("usuarios/$emailFormateado")
+
+        ref.child("username").addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val username = snapshot.getValue(String::class.java)
+                if (username != null) {
+                    binding.tvPerfilUsername.text = username
+                } else {
+                    binding.tvPerfilUsername.text = emailFormateado
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     private fun setListeners() {
@@ -102,14 +123,18 @@ class PerfilActivity : AppCompatActivity() {
     private fun imagenOnStart() {
         val ref = storage.reference
         val file = ref.child("perfiles/$email/perfil.jpg")
+        binding.progressBarImagenPerfil.visibility = View.VISIBLE
+
         file.metadata.addOnSuccessListener {
             file.downloadUrl.addOnSuccessListener { uri ->
                 rellenarImagen(uri)
+                binding.progressBarImagenPerfil.visibility = View.GONE
             }
         }.addOnFailureListener {
             val defaultImg = ref.child("default/perfil.jpg")
             defaultImg.downloadUrl.addOnSuccessListener { uri ->
                 rellenarImagen(uri)
+                binding.progressBarImagenPerfil.visibility = View.GONE
             }
         }
     }
