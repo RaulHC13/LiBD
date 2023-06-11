@@ -68,7 +68,7 @@ class PerfilActivity : AppCompatActivity() {
                 if (username != null) {
                     binding.tvPerfilUsername.text = username
                 } else {
-                    binding.tvPerfilUsername.text = emailFormateado
+                    binding.tvPerfilUsername.text = prefs.getUsernameGenerado()
                 }
             }
             override fun onCancelled(error: DatabaseError) {}
