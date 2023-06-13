@@ -20,5 +20,5 @@ Está en __constante desarrollo__, aún hay una serie de funcionalidades que se 
 
 ### Instalación ### 
 
-Se puede descargar la apk más reciente en el apartado [Releases] (https://github.com/RaulHC13/LiBD/releases/tag/LiBD)
+Se puede descargar la apk más reciente en el apartado [Releases](https://github.com/RaulHC13/LiBD/releases/tag/LiBD)
 
